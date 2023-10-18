@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<!-- saved from url=(0090)https://learning.tokioschool.com/pluginfile.php/26612/mod_resource/content/1/py_M5_T2.html -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://learning.tokioschool.com/pluginfile.php/1/theme_remui/faviconurl/1646910975/favicon.png" type="image/x-icon" class="favicon">
+    <link rel="preload" href="https://learning.tokioschool.com/pluginfile.php/26065/mod_resource/content/3/RecursosTokio/branding/WalsheimPro/GTWalsheimPro-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="https://learning.tokioschool.com/pluginfile.php/26065/mod_resource/content/3/RecursosTokio/branding/WalsheimPro/GTWalsheimPro-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="./Excel Documentacion_files/style-base.css">
+    <link type="text/css" rel="stylesheet" href="./Excel Documentacion_files/style-tokio.css">
+    <title>Tokio · Programación Python</title>
+    <script src="./Excel Documentacion_files/jquery-3.6.0.min.js.descarga" type="text/javascript"></script>
+    <script src="./Excel Documentacion_files/tokiodatabase.js.descarga" type="text/javascript"></script>
+    <script src="./Excel Documentacion_files/tokiofunciones.js.descarga" type="text/javascript"></script>
+</head>
+<body class="contenido" id="top" data-curso="Python" data-url="py_M0_T0.html" cz-shortcut-listen="true">
+    <!--  PORTADA -->
+    <header>
+        <h1><span>2</span> <p>Excel - CSV</p></h1>
+    </header>
+    <aside class="mainmenu">
+        <!-- Se genera por Javascript-->
+    </aside>
+    <main>
+        <!--  TOOLBAR -->
+        <header class="toolbar" style="top: 0px;">
+            <!-- Se genera por Javascript-->
+        <div class="marca tokio"><a href="https://learning.tokioschool.com/" title="Volver a Tokio"></a></div><nav class="breadcrumbs"><a href="https://learning.tokioschool.com/course/view.php?id=74" class="cambia"><span class="miga migacurso"><span class="migacorta">Python</span><span class="migalarga">Programación Python</span></span></a><a href="https://learning.tokioschool.com/course/view.php?id=74&amp;section=103" class="cambia"><span class="miga migamodulo"><span class="migacorta">Módulo 5</span><span class="migalarga">Manipulación de datos</span></span></a><a class="cambia"><span class="miga migatema"><span class="migacorta">Unidad 2</span><span class="migalarga">Excel - CSV</span></span></a></nav><div class="progressbar" style="width: 6.85432%;"></div></header>
+
+        <!--  INDICE -->
+        <section class="index">
+            <article>
+                <div class="estrecho">
+                <aside class="toc"><h3 class="noborder">Sumario</h3>
+                <!--Se genera por Javascript-->
+                <p><span>2.1</span><a href="https://learning.tokioschool.com/pluginfile.php/26612/mod_resource/content/1/py_M5_T2.html#2.1">Excel (XLS)</a></p><p><span>2.2</span><a href="https://learning.tokioschool.com/pluginfile.php/26612/mod_resource/content/1/py_M5_T2.html#2.2">CSV</a></p></aside>
+            </div>
+            </article>
+        </section>
+
+        <!--  CONTENIDO -->
+        <section id="2.1">
+            <article>
+                <div class="estrecho">
+                <h2 class="seccion"><span>2.1</span><strong>Excel (XLS)</strong></h2>
+
+                <p class="primerparrafo"><strong>Excel</strong> es un <em>software</em> de hoja de cálculo usado en todo el mundo. </p>
+                <p>Sus inconvenientes son que no puede trabajar con cantidades de datos exageradamente grandes, aunque nos permite realizar multitud de operaciones, no nos permite aplicar una lógica de programación, su rendimiento decae con el volumen de datos y sus ficheros (.xls) tienen un formato muy complejo y visual, lo que hace que sean muy pesados.</p>
+                
+                <p>Por ejemplo, una tabla de Excel con 1 millón de registros ocupa, aproximadamente, un tamaño de unos 12MB.</p>
+
+                <p>En programación podremos trabajar con ficheros Excel y suplir algunas de sus debilidades, o trabajaremos más eficientemente con ficheros CSV.</p>
+
+                <p>Vamos a ver cómo trabajar con ficheros tipo Excel (.xls), para ello utilizaremos la <strong>librería <em>openpyxl</em></strong>, que nos permite acceder y modificar ficheros Excel. Podemos encontrar la documentación en <a href="https://openpyxl.readthedocs.io/en/stable/">https://openpyxl.readthedocs.io/en/stable/</a>. Lo primero será importar dicha librería a nuestro programa mediante la instrucción:</p>
+
+<div class="grid python">
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [1]</pre>
+<pre class="mycode col7 pythonin"><strong class="color1">import</strong> openpyxl </pre>
+</div>
+                <p>Para estos ejemplos manejaremos un archivo de nombre “<code class="ruta">02_Excel_data.xlsx</code>”, que se encuentra adjunto en las prácticas correspondientes.</p>
+                <p>Para abrir un archivo de Excel, accedemos a los nombres de las hojas y creamos una variable que haga referencia a una hoja y procedemos de la siguiente manera:</p>
+
+<div class="grid python">
+
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [2]</pre>
+<pre class="mycode col7 pythonin"><span class="coment"># Abrir un archivo Excel (workbook)</span>
+<span class="color2">wb</span> = openpyxl.load_workbook(<span class="color3">"02_Excel_data.xlsx"</span>)
+
+<span class="coment"># Imprimir los nombres de las hojas</span>
+<span class="color1">print</span>(<span class="color3">"Nombres de hojas: "</span>)
+<span class="color1">print</span>(<span class="color2">wb</span>.sheetnames)
+
+<span class="color1">print</span>(<span class="color3">"\nNombres de hojas (otra forma): "</span>)
+    <span class="color1">for</span> sheet <span class="color1">in</span> <span class="color2">wb</span>:
+        <span class="color1">print</span>(sheet.title)
+
+<span class="coment"># HOJA 1
+# Crear una variable que haga referencia a la primera hoja del Excel</span>
+<span class="color2">hoja_uno</span> = <span class="color2">wb</span>.sheetnames[0]
+<span class="color1">print</span>(<span class="color3">"\nPrimera hoja: "</span>)
+<span class="color1">print</span>(<span class="color2">hoja_uno</span>)
+</pre>
+<pre class="col0">Out [2]</pre>
+<pre class="mycode col7 preout">Nombres de hojas:
+['address', 'ventas', 'otros'] 
+
+Nombres de hojas (otra forma):
+address 
+ventas 
+otros 
+
+Primera hoja:
+address</pre></div>
+
+                 <p>Para acceder a una celda de una hoja concreta:</p>   
+
+
+<div class="grid python">
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [3]</pre>
+<pre class="mycode col7 pythonin"><span class="coment"># Crear una variable que haga referencia a la primera hoja del Excel</span>
+<span class="color2">hoja_uno</span> = <span class="color2">wb</span>[<span class="color3">"address"</span>] 
+
+<span class="coment"># Acceder a una celda directamente</span>
+<span class="color1">print</span>(<span class="color2">hoja_uno</span>[<span class="color3">"A1"</span>].value)  <span class="coment"># contenido</span>
+<span class="color1">print</span>(<span class="color2">hoja_uno</span>[<span class="color3">"B1"</span>])        <span class="coment"># referencia</span>
+
+<span class="coment"># Acceder a una celda a través de una nomenclatura fila-columna</span>
+<span class="color1">print</span>(<span class="color2">hoja_uno</span>.cell(row=5,column=2).value)
+</pre>
+<pre class="col0">Out [3]</pre>
+<pre class="mycode col7 preout">Last
+&lt;Cell 'address'.B1&gt;
+Davey </pre>
+</div>
+
+
+<p>Para acceder a múltiples celdas de una hoja concreta:</p>
+                  
+<div class="grid python">
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [4]</pre>
+<pre class="mycode col7 pythonin">multiple_cells = <span class="color2">hoja_uno</span>[<span class="color3">"A1"</span>:<span class="color3">"B3"</span>]
+<span class="color1">for</span> row <span class="color1">in</span> multiple_cells:
+    <span class="color1">for</span> cell <span class="color1">in</span> row:
+        <span class="color1">print</span>(cell.value)
+</pre>
+<pre class="col0">Out [4]</pre>
+<pre class="mycode col7 preout">Last
+First
+Buffet
+Jimmy
+Bush
+George    
+</pre>
+</div>
+
+<p>Si lo que necesitamos es acceder a todas las filas de una hoja concreta:</p>
+
+<div class="grid python">
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [5]</pre>
+<pre class="mycode col7 pythonin"><span class="color1">for</span> fila <span class="color1">in</span> <span class="color2">hoja_uno</span>.rows: 
+    <span class="color1">for</span> columna <span class="color1">in</span> fila: 
+        <span class="color1">print</span>(columna.coordinate, columna.value)
+    <span class="color1">print</span>(<span class="color3">"---Final de Fila---"</span>)
+</pre>
+<pre class="col0">Out [5]</pre>
+<pre class="mycode col7 preout" style="max-height:500px; overflow-y: auto;">A1 Last
+B1 First
+C1 Address
+D1 City
+E1 State 
+F1 ZIP
+---Final de Fila---
+A2 Buffet
+B2 Jimmy
+C2 Somewhere on the Beach
+D2 Key West
+E2 FL
+F2 33040
+---Final de Fila---
+A3 Bush
+B3 George
+C3 1600 Pennsylvania Ave
+D3 Washington
+E3 DC
+F3 20500
+---Final de Fila---
+A4 Cartman
+B4 Eric
+C4 84 Bigboned Way
+D4 South Park
+E4 CO
+F4 84214
+---Final de Fila---
+A5 Crockett
+B5 Davey
+C5 The Alamo
+D5 San Antonio
+E5 TX
+F5 78210
+---Final de Fila---
+A6 Doe
+B6 Jane
+C6 821 Zimbabwe Awe
+D6 Washington
+E6 DC
+F6 20021
+---Final de Fila---
+A7 Gates
+B7 Bill
+C7 1 Microsoft Way
+D7 Redmond
+E7 WA
+F7 98052
+---Final de Fila---
+</pre></div>
+
+<p>O bien acceder a todas las columnas de una hoja concreta:</p>
+
+<div class="grid python">
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [6]</pre>
+<pre class="mycode col7 pythonin"><span class="color1">for</span> columna <span class="color1">in</span> <span class="color2">hoja_uno</span>.columns: 
+    <span class="color1">for</span> fila <span class="color1">in</span> columna: 
+        <span class="color1">print</span>(fila.coordinate, fila.value)
+    <span class="color1">print</span>(<span class="color3">"---Final de Columna---"</span>)
+</pre>
+<pre class="col0">Out [6]</pre>
+<pre class="mycode col7 preout" style="max-height:500px; overflow-y: auto;">A1 Last
+A2 Buffet
+A3 Bush
+A4 Cartman
+A5 Crockett
+A6 Doe
+A7 Gates
+---Final de Columna---
+B1 First
+B2 Jimmy
+B3 George
+B4 Eric
+B5 Davey
+B6 Jane
+B7 Bill
+---Final de Columna---
+C1 Address
+C2 Somewhere on the Beach
+C3 1600 Pennsylvania Ave
+C4 84 Bigboned Way
+C5 The Alamo
+C6 821 Zimbabwe Awe
+C7 1 Microsoft Way
+---Final de Columna---
+D1 City
+D2 Key West
+D3 Washington
+D4 South Park
+D5 San Antonio
+D6 Washington
+D7 Redmond
+---Final de Columna---
+E1 State 
+E2 FL
+E3 DC
+E4 CO
+E5 TX
+E6 DC
+E7 WA
+---Final de Columna---
+F1 ZIP
+F2 33040
+F3 20500
+F4 84214
+F5 78210
+F6 20021
+F7 98052
+</pre></div>
+
+<p>Ahora vamos a modificar celdas de una hoja concreta, en nuestro caso, la hoja 2:</p>
+
+<div class="grid python">
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [7]</pre>
+<pre class="mycode col7 pythonin"><strong class="color1">import</strong> datetime </pre>
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [8]</pre>
+<pre class="mycode col7 pythonin"><span class="coment"># Crear una variable que haga referencia a la segunda hoja del Excel</span>
+<span class="color2">hoja_dos</span> = <span class="color2">wb</span>[<span class="color3">"ventas"</span>]  
+</pre>
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [9]</pre>
+<pre class="mycode col7 pythonin"><span class="coment"># Modificar una celda (de 3 formas diferentes)</span>
+<span class="color2">hoja_dos</span>[<span class="color3">"B6"</span>] = 5
+<span class="color2">hoja_dos</span>[<span class="color3">"C6"</span>].value = 5
+<span class="color2">hoja_dos</span>.cell(row=6, column=4, value=5)
+</pre>
+<pre class="col0">Out [9]</pre>
+<pre class="mycode col7 preout">&lt; Cell 'ventas'.D6&gt;</pre>
+
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [10]</pre>
+<pre class="mycode col7 pythonin"><span class="coment"># Añadir la hora actual en la celda E2</span>
+<span class="color2">hoja_dos</span>[<span class="color3">"E2"</span>].value = datetime.datetime.now()
+</pre>
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [11]</pre>
+<pre class="mycode col7 pythonin"><span class="coment"># Guardar cambios (¡Importante! El Excel debe estar cerrado)</span>
+<span class="color2">wb</span>.save(<span class="color3">"02_Excel_data_xlsx"</span>)  
+</pre>
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [12]</pre>
+<pre class="mycode col7 pythonin"><span class="coment"># Modificar la celda B2, que contiene un 40, por un 99</span>
+<span class="color1">print</span>(<span class="color3">"Celda B2 antes de modificarla: "</span>, <span class="color2">hoja_dos</span>[<span class="color3">"B2"</span>].value)
+<span class="color2">hoja_dos</span>[<span class="color3">"B2"</span>] = 99
+<span class="color1">print</span>(<span class="color3">"Celda B2 despues de modificarla: "</span>, <span class="color2">hoja_dos</span>[<span class="color3">"B2"</span>].value)
+
+<span class="coment"># Modificar la celda C2, con una formula</span>
+<span class="color1">print</span>(<span class="color3">"Celda C2 antes de modificarla con la formula: "</span>, <span class="color2">hoja_dos</span>[<span class="color3">"C2"</span>].value)
+<span class="color2">hoja_dos</span>[<span class="color3">"C2"</span>] = <span class="color3">"=SUM(B2, 3)"</span>
+<span class="color1">print</span>(<span class="color3">"Celda C2 despues de modificarla con la formula: "</span>, <span class="color2">hoja_dos</span>[<span class="color3">"C2"</span>].value)
+</pre>
+<pre class="col0">Out [12]</pre>
+<pre class="mycode col7 preout">Celda B2 antes de modificarla: 40
+Celda B2 después de modificarla: 99
+Celda C2 antes de modificarla con la formula: 8
+Celda C2 despues de modificarla con la formula: =SUM(B2, 3) 
+</pre>
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [13]</pre>
+<pre class="mycode col7 pythonin"><span class="coment"># Guardar cambios</span>
+<span class="color2">wb</span>.<span class="color1">save</span>(<span class="color3">"02_Excel_data.xlsx"</span>) </pre>
+</div>
+
+<p>Añadimos contenido nuevo a una hoja concreta:</p>
+
+<div class="grid python">
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [14]</pre>
+<pre class="mycode col7 pythonin"><span class="color2">hoja_dos</span>.<span class="color1">append</span>([<span class="color3">"Junio"</span>,99,100])
+<span class="coment"># Guardar cambios</span>
+<span class="color2">wb</span>.<span class="color1">save</span>(<span class="color3">"02_Excel_data.xlsx"</span>)
+</pre>
+</div>
+
+<p>Creamos una hoja nueva y le damos nombre:</p>
+
+
+<div class="grid python">
+
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [15]</pre>
+<pre class="mycode col7 pythonin"><span class="coment"># Abrir un archivo Excel (workbook)</span>
+<span class="color2">wb</span> = openpyxl.load_workbook(<span class="color3">"02_Excel:Data.xlsx"</span>)
+
+<span class="coment"># Creamos una nueva hoja (por defecto al final, si no, le pasamos como parámetro el índice de la posición deseada)</span>
+<span class="color2">hoja_otros</span> = <span class="color2">wb</span>.create.sheet(<span class="color3">"Otros"</span>)
+
+<span class="coment"># Imprimir los nombres de las hojas</span>
+<span class="color1">print</span>(<span class="color3">"Nombres de hojas: "</span>)
+<span class="color1">print</span>(<span class="color2">wb</span>.sheetnames)
+
+<span class="coment"># Guardar cambios</span>
+<span class="color2">wb</span>.save(<span class="color3">"02_Excel_data.xlsx"</span>)
+</pre>
+<pre class="col0">Out [15]</pre>
+<pre class="mycode col7 preout">Nombres de hojas:
+['address', 'ventas', 'otros', 'Otros1']</pre>
+
+</div>
+
+<p>Por último, aquí vemos una manera de generar gráficas:</p>
+
+<div class="grid python">
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [16]</pre>
+<pre class="mycode col7 pythonin"> 
+<strong class="color1">import</strong> openpyxl
+
+<span class="coment"># Abrir un archivo Excel (workbook)</span>
+<span class="color2">wb</span> = openpyxl.load_workbook(<span class="color3">"02_Excel_data.xlsx"</span>)
+
+<span class="coment"># Definimos la hoja dos (hoja de ventas)</span>
+<span class="color2">hoja_dos</span> = <span class="color2">wb</span>[<span class="color3">"ventas"</span>]
+
+<span class="coment"># Configuracion y creación de la gráfica</span>
+<span class="color2">grafica</span> = AreaChart()
+<span class="color2">grafica</span>.title = <span class="color3">"Grafica de Area"</span>
+<span class="color2">grafica</span>.style = 13
+<span class="color2">grafica</span>.x_axis.title = <span class="color3">"Periodo"</span>
+<span class="color2">grafica</span>.y_axis.title = <span class="color3">"Utilidades"</span>
+periodo = Reference(<span class="color2">hoja_dos</span>, min_col=1, min_row=2, max_row=7)
+utilidades = Reference(<span class="color2">hoja_dos</span>, min_col=2, min_row=1, max_col=3, max_row=7)
+<span class="color2">grafica</span>.add_data(utilidades, titles_from_data=True)
+<span class="color2">grafica</span>.set_categories(periodo)
+<span class="color2">hoja_dos</span>.add_chart(<span class="color2">grafica</span>, <span class="color3">"A10"</span>)
+
+<span class="coment"># Guardamos los cambios</span>
+<span class="color2">wb</span>.save(<span class="color3">"02_Excel_data.xlsx"</span>)
+<span class="color1">print</span>(<span class="color3">"GRAFICA GENERADA"</span>)
+</pre>
+<pre class="col0">Out [16]</pre>
+<pre class="mycode col7 preout">GRAFICA GENERADA</pre>
+</div>
+            </div>
+      
+        <figure class="full lightblue">  
+            <div><img src="./Excel Documentacion_files/M5U2-full1.svg" alt="Ilustracion"></div>
+        </figure>
+      
+            </article>
+        </section>
+        <section id="2.2">
+            <article>
+                <div class="estrecho">
+                <h2 class="seccion"><span>2.2</span><strong>CSV</strong></h2>
+
+                <p>Los <strong>archivos CSV</strong> (valores separados por comas, del inglés <em>comma-separated values</em>) son un tipo de documento en formato abierto, sencillo para representar datos en forma de tabla (como Excel), en las que las filas se separan por saltos de línea y las columnas por comas (,) o punto y coma (;), en países donde la coma es el separador decimal como por ejemplo en Chile, Perú, Argentina, España y Brasil.</p>
+
+                <p>Si guardamos nuestro archivo Excel (xls) de 1 millón de registros en formato CSV, ocupará aproximadamente, un tamaño de 7MB.</p>
+
+                <div class="destacado extra" data-info="¿Sabías que?" style="--acento:var(--extra)">
+                    <p>Los ficheros CSV son utilizados ampliamente en la <strong>ciencia de datos</strong> por su gran capacidad para importar y exportar grandes cantidades de datos.</p>
+                </div> 
+
+                <p>Las ventajas que nos ofrecen los ficheros CSV son, que para usar datos desde nuestros programas <em>software</em>, no necesitamos que los datos estén bonitos o estructurados en tablas y que para el desarrollo de <em>software</em> sólo necesitamos que los datos estén separados por algún carácter de separación (“;” por ejemplo), que los ficheros de datos ocupen lo menos posible (para poder gestionarlos más rápido) y que contengan únicamente los datos.</p>
+
+                <p>Por ejemplo, en un Excel puede ser lógico poner nuestros datos con el símbolo del € o el $, pero en programación, ese carácter no sirve para nada, de hecho, lo más probable es que genere algún tipo de error. El programador será el encargado de saber, documentar y ejecutar esos datos acordes con lo que son esos datos (€ o $)</p>
+
+                <p>Vamos a practicar con ficheros CSV, para ello usaremos el módulo csv que nos permite trabajar con ficheros CSV. Podemos encontrar la documentación en <a href="https://docs.python.org/3/library/csv.html">https://docs.python.org/3/library/csv.html</a>. Lo primero que haremos será importar el módulo a nuestro programa mediante la instrucción:</p>
+
+<div class="grid python">
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [ ]</pre>
+<pre class="mycode col7 pythonin"><span class="color1">import</span> csv</pre>
+</div>
+
+<p>Para estos ejemplos trabajaremos con un archivo de nombre “<code class="ruta">03_CSV_data.csv</code>”, que se encuentra adjunto en las prácticas correspondientes. Abrimos y leemos el fichero CSV con <code>reader</code> de forma normal y optimizando la salida:</p>
+
+<div class="grid python">
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [ ]</pre>
+<pre class="mycode col7 pythonin"><span class="coment"># Leer archivo csv con reader</span>
+<span class="color1">with open</span>(<span class="color3">"03_CSV_data.csv"</span>, <span class="color3">"r"</span>) <span class="color1">as</span> my_csv_file:
+    reader = csv.reader(my_csv_file)
+    <span class="color1">for</span> row <span class="color1">in</span> reader:
+        <span class="color1">print</span>( row )
+</pre>
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [ ]</pre>
+<pre class="mycode col7 pythonin"><span class="coment"># Leer archivo csv con reader y optimizando la salida</span>
+<span class="color1">with open</span>(<span class="color3">"03_CSV_data.csv"</span>, <span class="color3">"r"</span>) <span class="color1">as</span> my_csv_file:
+    reader = csv.reader(my_csv_file, delimiter=<span class="color3">','</span>)
+    <span class="color1">for</span> row <span class="color1">in</span> reader:
+        <span class="color1">print</span>(<span class="color3">', '</span>.join(row))
+</pre>
+</div>
+
+<p>Aquí vemos el uso de <code>reader</code> y <code>next</code>:</p>
+
+<div class="grid python">
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [ ]</pre>
+<pre class="mycode col7 pythonin"><span class="coment"># Leer archivo csv con reader y next</span>
+<span class="color1">with open</span>(<span class="color3">"03_CSV_data.csv"</span>, <span class="color3">"r"</span>) <span class="color1">as</span> my_csv_file:
+    <span class="coment">reader = csv.reader(my_csv_file, delimiter=<span class="color3">','</span>)</span>
+    
+    <span class="color2">reg0</span> = <span class="color1">next</span>(reader)  <span class="coment"># Leer registro (lista)</span>
+    <span class="color1">print</span>(<span class="color2">reg0</span>)          <span class="coment"># Mostrar registro</span>
+
+    <span class="color2">reg1</span> = <span class="color1">next</span>(reader)  <span class="coment"># Leer siguiente registro</span>
+    <span class="color1">print</span>(<span class="color2">reg1</span>)          <span class="coment"># Mostrar registro</span>
+
+    <span class="coment"># Almacenar en variables el siguiente registro en el orden que se indica</span>
+    <span class="color2">nombre</span>, <span class="color2">provincia</span>, <span class="color2">consumo</span> = next(reader)
+    <span class="color1">print</span>(<span class="color2">nombre</span>, <span class="color2">provincia</span>, <span class="color2">consumo</span>)
+</pre>
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [ ]</pre>
+<pre class="mycode col7 pythonin"><span class="coment"># Leer archivos csv con reader, next, bucle y formato de salida</span>
+<span class="color1">with open</span>(<span class="color3">"03_CSV_data.csv"</span>, <span class="color3">"r"</span>) <span class="color1">as</span> my_csv_file:
+    <span class="coment">reader = csv.reader(my_csv_file, delimiter=<span class="color3">','</span>)</span>
+    <span class="color1">next</span>(reader)
+    <span class="color1">for</span> index,row <span class="color1">in</span> enumerate(reader):
+        <span class="color1">print</span>(<span class="color3">'Línea: '</span> + str(index))
+        <span class="color1">print</span>(<span class="color3">'Nombre: '</span> + row[0] + <span class="color3">', Provincia: '</span> + row[1] + <span class="color3">', Consumo: '</span> + row[2])</pre>
+</div>
+
+<p>Ordenamos por campos con <a href="https://docs.python.org/3/library/operator.html">operator</a>:</p>
+
+
+<div class="grid python">
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [ ]</pre>
+<pre class="mycode col7 pythonin"><span class="color1">import</span> operator
+<span class="coment"># Leer archivo csv con reader y mostrarlo ordenado por el tercer campo (consumo)</span>
+my_csv_file = csv.reader(<span class="color1">open</span>(<span class="color3">"03_CSV_data.csv"</span>))
+listaordenada = <span class="color1">sorted</span>(my_csv_file,
+                       key=operator.itemgetter(2),
+                       reverse=<span class="color3">False</span>)
+<span class="color1">for</span> i <span class="color1">in</span> listaordenada:
+    <span class="color1">print</span>(i)
+<span class="coment"># Si queremos imprimir la lista de seguido: print(listaordenada)</span></pre>
+<pre class="col0">&nbsp;</pre>
+<pre class="mycode col7 preout">['Marta', 'Granada', '230']
+['Eugenia', 'Granada', '280']
+['Ana', 'Granada', '290']
+['Luis', 'Huelva', '310']
+['Carmen', 'Sevilla', '320']
+['Francisco', 'Granada', '320']
+['Alejandro', 'Sevilla', '330']
+['Antonio', 'Sevilla', '340']
+</pre>
+</div>
+
+<p>Leemos el fichero CSV en formato diccionario:</p>
+
+<div class="grid python">
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [ ]</pre>
+<pre class="mycode col7 pythonin"><span class="coment"># Leer archivo csv como lista de diccionarios con DictReader() y mostrar datos solo de algunas columnas</span>
+<span class="color1">with open</span>(<span class="color3">"03_CSV_data.csv"</span>) <span class="color1">as</span> my_csv_file:
+    reader = csv.DictReader(my_csv_file)
+    <span class="color1">for</span> ref <span class="color1">in</span> reader:
+        <span class="color1">print</span>(reg[<span class="color3">'provincia'</span>], reg[<span class="color3">'consumo'</span>])</pre>
+</div>
+
+<p>Leemos el fichero CSV en formato diccionario y ordenamos los campos con operator:</p>
+
+<div class="grid python">
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [ ]</pre>
+<pre class="mycode col7 pythonin"><span class="coment"># Leer archivo csv como lista de diccionarios y obtener una lista ordenada descendente por el campo "consumo"</span>
+my_csv_file = <span class="color1">open</span>(<span class="color3">"03_CSV_data.csv"</span>)
+reader = csv.DictReader(my_csv_file)
+listadicc = <span class="color1">list</span>(reader) <span class="coment"># Obtener lista de diccionarios</span>
+listafinal = <span class="color1">sorted</span>(listadicc,
+                    key=operator.itemgetter(<span class="color3">'consumo'</span>),
+                    reverse=<span class="color3">True</span>)
+<span class="color1">for</span> registro <span class="color1">in</span> listafinal:
+    <span class="color1">print</span>(registro)
+</pre>
+</div>
+
+<p>Cerramos correctamente el fichero CSV:</p>
+
+<div class="grid python">
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [ ]</pre>
+<pre class="mycode col7 pythonin"><span class="coment"># Borrar y cerrar fichero csv</span>
+<span class="color1">with open</span>(<span class="color3">"03_CSV_data.csv"</span>, <span class="color3">"r"</span>) <span class="color1">as</span> my_csv_file:
+    reader = csv.reader(my_csv_file)
+    <span class="color1">for</span> row <span class="color1">in</span> reader:
+        <span class="color1">print</span>(row)
+    
+<span class="color1">del</span> reader           <span class="coment"># Borrar objetos</span>
+my_csv_file.<span class="color1">close</span>()  <span class="coment"># Cerrar archivo</span>
+<span class="color1">del</span> my_csv_file      <span class="coment"># Borrar objeto</span>
+<span class="color1">print</span>(<span class="color3">"Fichero csv cerrado con éxito"</span>)</pre>
+</div>
+
+<p>Creamos un fichero CSV nuevo:</p>
+
+<div class="grid python">
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [ ]</pre>
+<pre class="mycode col7 pythonin"><span class="coment"># Escribir todas las tuplas de una lista con writerow() y writerows() en un fichero nuevo (apertura del fichero con "w" o "wb") </span>   
+datos = [(<span class="color3">'aaa'</span>, 111),
+         (<span class="color3">'bbb'</span>, 222),
+         (<span class="color3">'ccc'</span>, 333)]
+csvsalida = <span class="color1">open</span>(<span class="color3">"03_CSV_data_2.csv"</span>, <span class="color3">"w"</span>, newline='')
+writer = csv.writer(csvsalida)
+writer.<span class="color1">writerow</span>([<span class="color3">'nombre'</span>, <span class="color3">'precio'</span>])
+writer.<span class="color1">writerows</span>(datos)
+
+<span class="color1">del</span> writer
+csvsalida.<span class="color1">close</span>()</pre>
+</div>
+
+<p>Y añadimos datos al fichero CSV ya creado:</p>
+
+
+<div class="grid python">
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [ ]</pre>
+<pre class="mycode col7 pythonin"><span class="coment"># Añadir todas las tuplas de una lista en un fichero existente (apertura del fichero con "a" o "ab", que viene de append y añade info al final</span>
+
+datosNuevos = [(<span class="color3">'ddd'</span>, 444), (<span class="color3">'eee'</span>, 555), (<span class="color3">'fff'</span>, 666)]
+csvsalida = <span class="color1">open</span>(<span class="color3">"03_CSV_data_2.csv"</span>, <span class="color3">"a"</span>, newline='')  <span class="coment"># a = append</span>
+writer = csv.writer(csvsalida)
+writer.<span class="color1">writerows</span>(datosNuevos)
+
+<span class="color1">del</span> writer
+csvsalida.<span class="color1">close</span>()</pre></div>
+
+
+<p>Para comprobar que el fichero se haya creado con el contenido correcto, abriremos posteriormente el fichero <code class="ruta">03_CSV_data_2.csv</code>, que es el nuevo que hemos creado</p>
+            </div>
+            </article>
+        </section>
+ 
+    <section class="nav">
+       <!-- Se genera por Javascript -->
+    <article class="inner"><div class="curso"><p class="intro">Estás viendo:</p><p class="h4">Programación Python</p></div><div class="marcafooter"><div class="marca tokio"><a href="https://learning.tokioschool.com/" title="Volver a Tokio"></a></div></div></article></section>
+</main>
+    <footer>
+        <div class="gotop"><a href="https://learning.tokioschool.com/pluginfile.php/26612/mod_resource/content/1/py_M5_T2.html#top"></a></div>
+    </footer>
+
+<div class="lightbox"><div class="inner"></div></div></body></html>

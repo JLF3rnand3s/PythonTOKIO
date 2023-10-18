@@ -1,0 +1,754 @@
+
+// CLASES
+
+class miSeccion {
+    constructor(ordenSeccion, tituloSeccion) {
+        this.ordenSeccion = ordenSeccion;
+        this.tituloSeccion = tituloSeccion;
+    }
+}
+class miTema {
+    constructor(numeroTema, tituloTema) {
+        this.numeroTema = numeroTema;
+        this.tituloTema = tituloTema;
+    }
+    codigoTema = "";
+    secciones = {};
+    contieneSecciones = 0;
+    cuestionario = "";
+
+    crearSecciones(listasecciones) {
+        for(var j = 1; j <= listasecciones[this.codigoTema].length; j++) {
+
+            this.secciones[j] = new miSeccion(this.numeroTema+"."+j, listasecciones[this.codigoTema][j-1])
+        }
+        this.contieneSecciones = listasecciones[this.codigoTema].length;
+    };
+
+    buscarCuestionario(listacuestion) {
+        this.cuestionario = listacuestion[this.codigoTema]; 
+    };
+}
+class miModulo {
+    constructor(numeroModulo, tituloModulo) {
+        this.numeroModulo = numeroModulo;
+        this.tituloModulo = tituloModulo;
+     
+    }
+    temas = {};
+    practicas = {};
+    cuestionarios = {};
+    examen = "";
+
+    crearTemas(listatemas, listasecciones){
+        var i;
+        for(i=1; i <= listatemas[this.numeroModulo].length; i++) {
+            // miTema(numeroTema, tituloTema)
+            
+            this.temas[i] = new miTema( i, listatemas[this.numeroModulo][i-1]);
+            this.temas[i].codigoTema = "M"+this.numeroModulo+"_T"+i;
+
+            if(listasecciones[this.temas[i].codigoTema] != undefined) {
+                this.temas[i].crearSecciones(listasecciones);
+            };            
+        }
+
+        this.contieneTemas = listatemas[this.numeroModulo].length;
+    }
+
+    crearPracticas(listaPracticas) {
+        var p;
+        for(p=0; p < listaPracticas[this.numeroModulo].length; p++) {
+           this.practicas[p+1] = listaPracticas[this.numeroModulo][p];
+        }
+    }
+
+    crearCuestionarios(listaCuestion) {
+        var iterable = "M"+this.numeroModulo+"_T";
+        var filtrokeys = Object.keys(listaCuestion).filter(key => key.startsWith(iterable));
+
+        for(var f = 0; f < filtrokeys.length; f++){
+            this.cuestionarios[filtrokeys[f]] = listaCuestion[filtrokeys[f]];
+        }
+        this.examen = listaCuestion["M"+this.numeroModulo+"_EX"];
+
+        for(var t = 1; t <= Object.keys(this.temas).length; t++){
+            this.temas[t].buscarCuestionario(listaCuestion); 
+        }
+    }
+
+}
+class miCurso {
+    constructor(plataforma, codigoCurso, codigoHtml, tituloCurso, contieneModulos) {
+        this.plataforma = plataforma;
+        this.codigoCurso = codigoCurso;
+        this.codigoHtml = codigoHtml;
+        this.tituloCurso = tituloCurso;
+        this.contieneModulos = contieneModulos;
+        this.template = codigoHtml+"_M0_T0.html";
+    }
+    
+    modulos = {};
+
+    tienePortadas = 0;
+    tieneEvaluacion = 0;
+    tieneMainmenu = false;
+    navegaFooter = false;
+    jerarquia = "modulos"; /* modulos, semanas */
+
+    examen = "#";
+    examenesPlataforma = {};
+
+    enlaceCursoPlataforma = "";
+    enlacesModulosPlataforma = {};
+    
+
+    crearContenido(listamodulos, listatemas, listasecciones){
+        var i;
+        for(i=1; i <= this.contieneModulos; i++) {
+            // miModulo(numeroModulo, tituloModulo)
+            this.modulos[i] = new miModulo(i, listamodulos[i]);
+            this.modulos[i].crearTemas(listatemas, listasecciones);
+        }
+
+        cursosTODOS[this.codigoCurso] = this;
+        
+    }
+
+    crearEvaluable(listapracticas, listacuestion){
+        var j;
+        for(j=1; j <= this.contieneModulos; j++) {
+            // miModulo(numeroModulo, tituloModulo)
+            this.modulos[j].crearPracticas(listapracticas); 
+            this.modulos[j].crearCuestionarios(listacuestion); 
+        }
+    } 
+    
+}
+
+var cursosTODOS = {};
+
+var cursoJAVA = new miCurso("Tokio", "PRJAVA", "java", "Programación Java", 3);
+
+var modulosJAVA = {
+    1 : "Iniciación a Java",
+    2 : "Java Avanzado",
+    3 : "Aplicando Java",
+}
+
+// Lista temas de cada módulo
+
+var temasJAVA = { 
+    1 : [//Temas del modulo 1
+        "Introducción al lenguaje Java",
+        "Tipos de datos y operadores en Java",
+        "Introducción a sentencias de control",
+        "Vectores, arrays y cadenas de texto",
+        "Introducción a la programación orientada a objetos",
+        "Herencia",
+        "Interfaces",
+        "Excepciones",
+        "Módulos",
+    ],
+    2 : [//Temas del modulo 2
+        "Clases anidadas",
+        "Flujo E/S (NIO2)",
+        "Sub<wbr>procesamiento múltiple: <em>Multithreading</em>",
+        "Enumeraciones, <em>autoboxing</em> y anotaciones",
+        "Genéricos",
+        "Expresiones <em>lambda</em>",
+        "Manejo de string",
+        "Expresiones regulares",
+        "Modelo - Vista - Controlador (MVC)",
+    ],
+    3 : [//Temas del modulo 3
+        "Desarrollo de proyectos",
+        "Bibliotecas gráficas de Java",
+        "JavaFX",
+        "API para fechas y localización",
+        "JUnit y depuración de errores",
+        "API JDBC",
+        "Entornos de red",
+        "Programación segura",
+    ],
+}
+
+
+// Lista secciones de cada tema
+// Si un tema solo tiene una sección con el mismo nombre del tema, no es necesario incluirla
+// Importante que el código M1_T1 coincida con el formato de archivos
+
+var seccionesJAVA = { 
+    M1_T1 : [
+        "Introducción a Java",
+        "Empezar a trabajar con Java",
+    ],
+    M1_T2 : [
+        "Variables y constantes",
+        "Tipos de datos",
+        "Declaración y asignación de variables y constantes",
+        "Comentarios",
+        "Operadores",
+
+    ],
+    M1_T3 : [
+        "Introducción a las sentencias de control",
+        "Sentencia secuencial",
+        "Sentencia condicional, alternativa o selectiva",
+        "Sentencia repetitiva o iterativa",
+    ],
+    M1_T4 : [
+        "Vectores o <em>arrays</em>",
+        "Cadenas de texto: <em>string</em>",
+    ],
+    M1_T5 : [
+        "Clases",
+        "Atributos",
+        "Métodos",
+        "Modificadores de acceso",
+        "Objetos"
+    ],
+    M1_T6 : [
+        "Introducción a la herencia",
+        "Características",
+        "Uso de herencias",
+        "<em>Override</em>: Sobreescribir o modificar métodos de la clase base",
+        "Sobreescribir atributos de la clase base",
+        "Clases finales",
+        "Clases abstractas"
+    ],
+    M1_T7 : [
+        "Introducción",
+        "Características",
+        "Diseño de clases usando interfaces",
+        "Interfaces con métodos por defecto y privados",
+        "Herencia entre interfaces"
+    ],
+    M1_T8 : [
+        "¿Qué es una excepción?",
+        "Tratamiento y creación de excepciones",
+    ],
+    M1_T9 : [
+        "Concepto de módulo",
+        "Elementos de un módulo",
+        "Definición de un módulo",
+        "Empaquetar aplicaciones en módulo",
+        "Opciones de módulos en Javac",
+        "Opciones de módulos en Java",
+    ],
+    M2_T1 : [
+        "Clases anidadas estáticas",
+        "Clases internas",
+    ],
+    M2_T2 : [
+        "<em>Streams</em> de Bytes",
+        "<em>Streams</em> de caracteres",
+        "Flujos predefinidos",
+        "Ficheros de texto",
+    ],
+    M2_T3 : [
+        "Hilos: Clase <em>Thread</em> e interfaz <em>runnable</em>",
+        "Creación de hilos",
+        "Ciclo de vida de un hilo (<em>thread</em>)",
+        "Sincronización de subprocesos en Java"
+    ],
+    M2_T4 : [
+        "Enumeraciones",
+        "<em>Autoboxing</em> y <em>unboxing</em>",
+        "Anotaciones",
+    ],
+    M2_T5 : [
+        "Introducción a los genéricos",
+        "Clases genéricas",
+        "Métodos genéricos",
+        "Constructores genéricos",
+        "Interfaces genéricas",
+        "Colecciones (Collection)",
+
+    ],
+    M2_T6 : [
+        "Introducción a las expresiones <em>lambda</em>",
+        "Fundamentos de la expresión <em>lambda</em>",
+        "Interfaces funcionales",
+        "Contextos de tipo de objetivo",
+    ],
+    M2_T7 : [
+        "Introducción",
+        "Métodos para el manejo de objetos <em>string</em>",
+        "<em>StringBuffer</em> y <em>StringBuilder</em>",
+    ],
+    M2_T8 : [
+        "Entidades de regexp",
+        "Ejemplos de expresiones regulares",
+    ],
+    M2_T9 : [
+        "Introducción",
+        "Modelo",
+        "Vista",
+        "Controlador",
+        "Arquitectura de las aplicaciones MVC",
+        "Otros patrones de diseño"
+    ],
+    M3_T1 : [
+        "Desarrollo y despliegue de proyectos con Maven",
+        "Estructura de un proyecto Java con Maven",
+        "El fichero <em>Project Object Model</em> (POM)",
+        "Las dependencias en Maven",
+        "Otras bibliotecas y librerías para el desarrollo de aplicaciones",
+    ],
+    M3_T2 : [
+        "Biblioteca gráfica <em>Swing</em>",
+        "Manejo de eventos",
+    ],
+    M3_T3 : [
+        "Creación de interfaces gráficas de usuario con JavaFX",
+        "Componentes gráficos de JavaFX",
+        "<em>Layouts</em>",
+        "Manejo de eventos",
+        "Concurrencia en JavaFX",
+        "Gráficos 2D",
+        "Herramientas y librerías de JavaFX",
+    ],
+    M3_T4 : [
+        "Gestión de horas y fechas",
+        "Localización",
+    ],
+    M3_T5 : [
+        "Fundamentos de JUnit",
+        "Implementación de pruebas unitarias con JUnit",
+        "<em>Asserts</em>",
+        "Cobertura de código",
+        "TDD (<em>Test Driven Develompent</em>) - Desarrollo guiado por pruebas",
+        "Documentación del código",
+        "El depurador de Eclipse",
+    ],
+    M3_T6 : [
+        "Introducción a las bases de datos",
+        "Lenguaje SQL",
+        "Ejecución de sentencias SQL con JDBC en Java",
+        "Creación de una aplicación CRUD",
+    ],
+    M3_T7 : [
+        "Clase URL",
+        "<em>Sockets</em>",
+        "<em>ServerSockets</em>",
+    ],
+    M3_T8 : [
+        "Autorización",
+        "Autenticación",
+        "Sistemas",
+        "Persistencia",
+        "Sesiones",
+        "Validación de datos de entrada y salida",
+        "Manejo de excepciones, auditoría y trazas",
+        "Servicios web",
+        "Criptografía",
+    ],
+}
+
+
+var cursoPython = new miCurso("Tokio", "Python", "py", "Programación Python", 5);
+var modulosPython = {
+    1 : "Python, el nuevo desconocido",
+    2 : "Características básicas del lenguaje",
+    3 : "Programación orientada a objetos",
+    4 : "POO y métodos aplicados",
+    5 : "Manipulación de datos"
+}
+var temasPython = { // Lista temas de cada modulo
+    1 : [
+        "Presentación de Python",
+        "¿Por qué escoger Python?",
+        "Características de Python",
+        "Entornos de desarrollo con Python"
+    ],
+    2 : [
+        "Palabras reservadas, tipo de datos, variables, constantes y operadores",
+        "Operadores en Python",
+        "Entrada y salida de datos",
+        "Tipos de datos avanzados",
+        "Control de flujo — Condicionales y bucles",
+        "Funciones",
+    ],
+    3 : [
+        "Metodología basada en objetos",
+        "Clases, objetos, atributos y métodos",
+        "Practicando con clases y objetos",
+        "Herencia",
+    ],
+    4 : [
+        "Otras herramientas de POO",
+        "Métodos aplicados",
+        "Errores y excepciones",
+        "Datos temporales",
+    ],
+    5 : [
+        "Archivos",
+        "Excel - CSV",
+        "JSON",
+        "Bases de datos",
+        "Librerías especializadas en el manejo de datos",
+    ],
+}
+var seccionesPython = { // Lista secciones de cada tema
+    M1_T1 : [
+        "¿Qué es Python?",
+        "Historia de Python",
+        "Versiones de Python",
+        "Material adicional",
+    ],
+    M1_T2 : [
+        "Evolución y objetivos de Python",
+    ],
+    M1_T4 : [
+        "Intérprete de Python oficial y su IDE",
+        "Anaconda Jupyter",
+        "PyCharm",
+        "Visual Studio Code",
+        "Material adicional",
+    ],
+    M2_T1 : [
+        "Palabras reservadas",
+        "Comentarios",
+        "Tipos de datos básicos",
+        "Variables",
+        "Constantes"
+    ],
+    M2_T2 : [
+        "Operadores de asignación",
+        "Operadores aritméticos",
+        "Operadores relacionales",
+        "Operadores lógicos",
+        "Precedencia de los operadores",
+        "Cambiando tipos de variables",
+        "Trabajando con cadenas de caracteres",
+        "La función print()",
+    ],
+    M2_T3 : [
+        "Entrada de datos por teclado",
+        "Salida de datos por pantalla"
+    ],
+    M2_T4 : [
+        "Listas",
+        "Tuplas",
+        "Sets",
+        "Diccionarios",
+    ],
+    M2_T5 : [
+        "Condicionales en Python",
+        "Bucles en Python"
+    ],
+    M2_T6 : [
+        "Concepto de las funciones en Python",
+        "Implementación de las funciones",
+        "Argumentos y parámetros",
+        "Funciones integradas de Python",
+        "Buenas prácticas con las funciones",
+    ],
+    M3_T1 : [
+        "Programación estructurada VS Programación Orientada a Objetos (POO)",
+        "Los 4 principios de la POO ",
+    ],
+    M3_T3 : [
+        "Definición de constructores",
+    ],
+    M3_T4 : [
+        "Definición de herencia",
+        "Usos de la herencia",
+        "Implementación de la herencia "
+    ],
+    M4_T1 : [
+        "Herencia múltiple",
+        "Polimorfismo",
+    ],
+    M4_T2 : [
+        "Métodos aplicados a los strings",
+        "Métodos aplicados a las listas",
+        "Métodos aplicados a los conjuntos",
+        "Métodos aplicados a las diccionarios",
+    ],
+    M4_T3 : [
+        "Errores",
+        "Excepciones",
+    ],
+    M4_T4 : [
+        "Fechas y horas",
+        "Problemas con las zonas horarias",
+        "Usamos diferentes husos horarios",
+    ],
+    M5_T1 : [
+        "Manejo de archivos en Python",
+    ],
+    M5_T2 : [
+        "Excel (XLS)",
+        "CSV",
+    ],
+    M5_T3 : [
+        "¿Qué es JSON?",
+        "JSON vs XML",
+        "Componentes",
+        "JSON minificado y JSON View",
+        "JSON en Python",
+    ],
+    M5_T4 : [
+        "¿Qué es una base de datos?",
+        "¿Cómo almacena los datos una base de datos?",
+        "Lenguaje SQL y NoSQL",
+        "Ejemplos de bases de datos",
+        "SQLite 3",
+        "Ejemplos prácticos",
+    ],
+    M5_T5 : [
+        "Numpy",
+        "Pandas",
+        "Otras librerías",
+    ],
+}
+
+
+var cursoPOO = new miCurso("Tokio", "PRPOO", "POO", "Iniciación a la Programación Orientada a Objetos", 3);
+
+var modulosPOO = {
+    1 : "Contexto e introducción al curso",
+    2 : "Conceptos básicos I",
+    3 : "Conceptos básicos II",
+}
+var temasPOO = { // Lista temas de cada modulo
+    1 : [
+        "¿Qué es la programación?",
+        "Modalidades y carreras profesionales",
+        "Concepto general de Programación estructurada",
+        "Conceptos generales de Programación Orientada a Objetos",
+        "Java, el lenguaje orientado a objetos",
+        "Programación Estructurada vs Programación Orientada a Objetos",
+        "Otros lenguajes orientados a objetos"
+    ],
+    2 : [
+        "Clases",
+        "Variables",
+        "Métodos",
+        "Arrays y otros componentes",
+        "Funciones cadena",
+        "Listas",
+        "Mapas",
+        "Estructuras de control de flujo",
+        "Condicional if",
+        "Condicional switch",
+        "Bucle while / do while",
+        "Bucle for clásico",
+        "Bucle for each",
+        "Errores que se pueden producir en un programa y cómo controlarlos"
+
+    ],
+    3 : [
+        "Instancias y métodos constructores",
+        "Clases",
+        "Interfaces",
+        "Polimorfismo",
+        "Herencia",
+        "Encapsulación. Niveles de acceso",
+        "Modificador de acceso static",
+        "Ejecución de constructores en la herencia. Uso de super y this"
+    ],
+}
+var seccionesPOO = { // Lista secciones de cada tema
+    M1_T1 : [
+        "¿Qué es la programación?",
+        "Conceptos sobre los lenguajes de programación",
+    ],
+    M1_T2 : [
+        "Modalidades de programación",
+        "Salidas laborales de la programación",
+    ],
+    M1_T4 : [
+        "Las características de la POO",
+        "Definición de objeto",
+        "Definición de clase",
+        "Principios de la POO"
+    ],
+    M1_T5 : [
+        "El origen de Java",
+        "Las tres distribuciones de Java",
+        "¿Qué es el JDK?",
+        "Estructura de un programa en Java"
+    ],
+    M1_T7 : [
+        "C Sharp (#)",
+        "Entorno de desarrollo .NET",
+        "Visual Studio",
+    ],
+    M2_T2 : [
+        "Variables",
+        "Tipos de variables",
+    ],
+    M2_T4 : [
+        "Arrays y otros componentes",
+        "Declaración del array",
+        "Creación de un array",
+        "Acceso al array",
+        "Arrays multidimensionales",
+        "Obtener la longitud del array",
+        "Comprobación de los límites del array",
+    ],
+    M2_T5 : [
+        "Funciones cadena",
+        "Métodos de String",
+        "StringBuilder",
+        "Concatenar cadena de caracteres"
+    ],
+    M2_T6 : [
+        "Listas",
+        "Declaración",
+        "Instanciación",
+        "Guardar y recuperar elementos",
+        "Principales métodos",
+    ],
+    M2_T7 : [
+        "Mapas",
+        "Declaración",
+        "Instanciación",
+        "Guardar y recuperar elementos",
+        "Principales métodos",
+    ],
+    M2_T9 : [
+        "Condicional if",
+        "Operadores",
+    ],
+    M2_T14 : [
+        "Errores que se pueden producir en un programa y cómo controlarlos",
+        "Clasificación de las excepciones",
+        "Los bloques try/catch/finally",
+        "Uso de excepciones"
+    ],
+    M3_T1 : [
+        "Instancias",
+        "Método constructor",
+    ],
+    M3_T2 : [
+        "Definición",
+        "Tipos de clases",
+    ],
+    M3_T4 : [
+        "Definición",
+        "Tipos de polimorfismo",
+    ],
+    M3_T5 : [
+        "Definición",
+        "Agregación y composición",
+        "Conversión implícita y explícita",
+        "El operador Instanceof"
+    ],
+    M3_T6 : [
+        "Definición",
+        "Modificadores",
+        "Uso de métodos get y set"
+    ],
+    M3_T8 : [
+        "Orden de ejecución de los constructores en la herencia",
+        "El operador super",
+        "El operador this"
+    ],
+};
+
+var practicasPOO = {
+    1 : [
+            ["Esquema gráfico comparativo entre lenguajes compilados y lenguajes interpretados", "/mod/assign/view.php?id=5941"],
+            ["Realización de un diagrama de flujo", "/mod/assign/view.php?id=6486"],
+            ["Descripción de la ejecución de un programa fuente en Java", "/mod/assign/view.php?id=6487"],
+            ["Escribir un programa utilizando pseudocódigo","/mod/assign/view.php?id=6488"],
+            ["Diferencia entre un lenguaje compilado y otro interpretado","/mod/assign/view.php?id=6489"],
+            ["Programación estructurada vs. POO","/mod/assign/view.php?id=18132"],
+            ["Programa C# con Visual Studio","/mod/assign/view.php?id=18133"],
+        ],
+    2: [
+            ["Realizar un programa Java que calcule la media aritmética", "/mod/assign/view.php?id=6491"],
+            ["Crear un programa Java para verificar una contraseña", "/mod/assign/view.php?id=6492"],
+            ["Crear una clase llamada Cuenta", "/mod/assign/view.php?id=6493"],
+            ["Pedir el lado de un cuadrado y calcular su área", "/mod/assign/view.php?id=6494"],
+            ["Factorial", "/mod/assign/view.php?id=6495"],
+            ["Realizar un programa Java que imprima la tabla del 9", "/mod/assign/view.php?id=6496"],
+            ["Pedir una nota del 0 al 10", "/mod/assign/view.php?id=6497"],
+            ["Realizar un programa Java para determinar si un número es o no primo", "/mod/assign/view.php?id=6498"],
+            ["Manejar excepciones", "/mod/assign/view.php?id=18134"],
+            
+    ],
+    3 : [
+            ["Diseñar una clase Java", "/mod/assign/view.php?id=6499"],
+            ["Comparar entre una clase y una interfaz", "/mod/assign/view.php?id=6500"],
+            ["Métodos polimórficos", "/mod/assign/view.php?id=6501"],
+            ["Crear objetos de la clase PC", "/mod/assign/view.php?id=6502"],
+            ["Modificadores de acceso", "https://learning.tokioschool.com/mod/assign/view.php?id=6503"],
+            ["Desarrollar una jerarquía de clases", "https://learning.tokioschool.com/mod/assign/view.php?id=6504"],
+            ["Crear una clase libro", "https://learning.tokioschool.com/mod/assign/view.php?id=10639"],
+    ],
+}; 
+
+var cuestionariosPOO = {
+    M1_T1 : "/mod/quiz/view.php?id=12266",
+    M1_T2 : "/mod/quiz/view.php?id=12267",
+    M1_T3 : "/mod/quiz/view.php?id=12268",
+    M1_T4 : "/mod/quiz/view.php?id=12269",
+    M1_T5 : "/mod/quiz/view.php?id=12270",
+    M1_T6 : "/mod/quiz/view.php?id=12271",
+    M1_EX : "/mod/quiz/view.php?id=17755",
+
+    M2_T1 :  "/mod/quiz/view.php?id=12272",
+    M2_T2 :  "/mod/quiz/view.php?id=12273",
+    M2_T3 :  "/mod/quiz/view.php?id=12274",
+    M2_T4 :  "/mod/quiz/view.php?id=12275",
+    M2_T5 :  "/mod/quiz/view.php?id=12276",
+    M2_T6 :  "/mod/quiz/view.php?id=17753",
+    M2_T7 :  "/mod/quiz/view.php?id=17754",
+    M2_T8 :  "/mod/quiz/view.php?id=12277",
+    M2_T9 :  "/mod/quiz/view.php?id=12278",
+    M2_T10 : "/mod/quiz/view.php?id=12279",
+    M2_T11 : "/mod/quiz/view.php?id=12280",
+    M2_T12 : "/mod/quiz/view.php?id=12281",
+    M2_T13 : "/mod/quiz/view.php?id=12282",
+    M2_T14 : "/mod/quiz/view.php?id=12283",
+    M2_EX  : "/mod/quiz/view.php?id=17756",
+
+    M3_T1 : "/mod/quiz/view.php?id=12284",
+    M3_T2 : "/mod/quiz/view.php?id=18421",
+    M3_T3 : "/mod/quiz/view.php?id=12285",
+    M3_T4 : "/mod/quiz/view.php?id=12286",
+    M3_T5 : "/mod/quiz/view.php?id=13375",
+    M3_T6 : "/mod/quiz/view.php?id=13376",
+    M3_T8 : "/mod/quiz/view.php?id=13377",
+    M3_EX : "/mod/quiz/view.php?id=5939"
+
+}
+ 
+cursoPOO.crearContenido(modulosPOO, temasPOO, seccionesPOO);
+cursoPOO.crearEvaluable(practicasPOO, cuestionariosPOO);  
+
+cursoPOO.tienePortadas = 2;
+cursoPOO.tieneEvaluacion = 3;
+cursoPOO.tieneMainmenu = true;  
+cursoPOO.navegaFooter = true;
+
+
+cursoJAVA.crearContenido(modulosJAVA, temasJAVA, seccionesJAVA);
+
+cursoJAVA.enlaceCursoPlataforma = "/course/view.php?id=35";
+
+cursoJAVA.enlacesModulosPlataforma = {
+    1: "/course/view.php?id=35&section=11",
+    2: "/course/view.php?id=35&section=48",
+    3: "/course/view.php?id=35&section=83",
+};
+
+
+
+cursoPython.crearContenido(modulosPython, temasPython, seccionesPython);
+
+cursoPython.enlaceCursoPlataforma = "/course/view.php?id=74";
+
+cursoPython.enlacesModulosPlataforma = {
+    1: "/course/view.php?id=74&section=12",
+    2: "/course/view.php?id=74&section=26",
+    3: "/course/view.php?id=74&section=59",
+    4: "/course/view.php?id=74&section=80",
+    5: "/course/view.php?id=74&section=103",
+};
+

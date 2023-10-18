@@ -1,0 +1,1 @@
+Esta cadena de texto hace alusion a que se ha reescrito el archivo '.txt'.

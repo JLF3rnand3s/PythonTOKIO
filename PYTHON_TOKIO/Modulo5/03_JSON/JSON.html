@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<!-- saved from url=(0090)https://learning.tokioschool.com/pluginfile.php/26613/mod_resource/content/1/py_M5_T3.html -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://learning.tokioschool.com/pluginfile.php/1/theme_remui/faviconurl/1646910975/favicon.png" type="image/x-icon" class="favicon">
+    <link rel="preload" href="https://learning.tokioschool.com/pluginfile.php/26065/mod_resource/content/3/RecursosTokio/branding/WalsheimPro/GTWalsheimPro-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="https://learning.tokioschool.com/pluginfile.php/26065/mod_resource/content/3/RecursosTokio/branding/WalsheimPro/GTWalsheimPro-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="./JSON_files/style-base.css">
+    <link type="text/css" rel="stylesheet" href="./JSON_files/style-tokio.css">
+    <title>Tokio · Programación Python</title>
+    <script src="./JSON_files/jquery-3.6.0.min.js.descarga" type="text/javascript"></script>
+    <script src="./JSON_files/tokiodatabase.js.descarga" type="text/javascript"></script>
+    <script src="./JSON_files/tokiofunciones.js.descarga" type="text/javascript"></script>
+</head>
+<body class="contenido" id="top" data-curso="Python" cz-shortcut-listen="true">
+    <!--  PORTADA -->
+    <header>
+        <h1><span>3</span> <p>JSON</p></h1>
+    </header>
+ 
+    <main>
+        <!--  TOOLBAR -->
+        <header class="toolbar" style="top: -4rem;">
+            <!-- Se genera por Javascript-->
+        <div class="marca tokio"><a href="https://learning.tokioschool.com/" title="Volver a Tokio"></a></div><nav class="breadcrumbs"><a href="https://learning.tokioschool.com/course/view.php?id=74" class="cambia"><span class="miga migacurso"><span class="migacorta">Python</span><span class="migalarga">Programación Python</span></span></a><a href="https://learning.tokioschool.com/course/view.php?id=74&amp;section=103" class="cambia"><span class="miga migamodulo"><span class="migacorta">Módulo 5</span><span class="migalarga">Manipulación de datos</span></span></a><a class="cambia"><span class="miga migatema"><span class="migacorta">Unidad 3</span><span class="migalarga">JSON</span></span></a></nav><div class="progressbar" style="width: 1.7386%;"></div></header>
+
+        <!--  INDICE -->
+        <section class="index">
+            <article>
+                <div class="estrecho">
+                <aside class="toc"><h3 class="noborder">Sumario</h3>
+                <!--Se genera por Javascript-->
+                <p><span>3.1</span><a href="https://learning.tokioschool.com/pluginfile.php/26613/mod_resource/content/1/py_M5_T3.html#3.1">¿Qué es JSON?</a></p><p><span>3.2</span><a href="https://learning.tokioschool.com/pluginfile.php/26613/mod_resource/content/1/py_M5_T3.html#3.2">JSON vs XML</a></p><p><span>3.3</span><a href="https://learning.tokioschool.com/pluginfile.php/26613/mod_resource/content/1/py_M5_T3.html#3.3">Componentes</a></p><p><span>3.4</span><a href="https://learning.tokioschool.com/pluginfile.php/26613/mod_resource/content/1/py_M5_T3.html#3.4">JSON minificado y JSON View</a></p><p><span>3.5</span><a href="https://learning.tokioschool.com/pluginfile.php/26613/mod_resource/content/1/py_M5_T3.html#3.5">JSON en Python</a></p></aside>
+            </div>
+            </article>
+        </section>
+
+        <!--  CONTENIDO -->
+        <section id="3.1">
+            <article>
+                <div class="estrecho">
+                <h2 class="seccion"><span>3.1</span><strong>¿Qué es JSON?</strong></h2>
+                <p class="primerparrafo"><u>JSON (<em>JavaScript ObjectNotation</em>)</u> es un formato para el intercambio de datos. Describe los datos con una sintaxis dedicada que se usa para identificar y gestionar los datos. JSON nació como una alternativa a XML.</p>
+                <p>Existen varias alternativas a JSON como son XML, TOML, CSON, YAML</p>
+                <figure><img src="./JSON_files/m5t3a1.png" alt="Logotipo de JSON" style="width:500px;"></figure>
+            </div>
+            </article>
+        </section>
+        <section id="3.2">
+            <article>
+                <div class="estrecho">
+                <h2 class="seccion"><span>3.2</span><strong>JSON vs XML</strong></h2>
+                <p>Una de las mayores ventajas que tiene el uso de JSON es que puede ser leído por cualquier lenguaje de programación. Por lo tanto, puede ser usado para el intercambio de información entre distintas tecnologías.</p>
+
+
+                <ul class="newtabs dos">
+                    <li class="active">
+                        <h5>XML</h5>
+                        <div class="inner">
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="mycode" data-code="XML">&lt;empinfo&gt;
+    &lt;employees&gt;
+        &lt;employee&gt;
+            &lt;name&gt;James Kirk&lt;/name&gt;
+            &lt;age&gt;40&lt;/age&gt;
+        &lt;/employee&gt;
+        &lt;employee&gt;
+            &lt;name&gt;Jean-Luc Picard&lt;/name&gt;
+            &lt;age&gt;45&lt;/age&gt;
+        &lt;/employee&gt;
+        &lt;employee&gt;
+            &lt;name&gt;Wesley Crusher&lt;/name&gt;
+            &lt;age&gt;27&lt;/age&gt;
+        &lt;/employee&gt;
+    &lt;/employees&gt;
+&lt;/empinfo&gt;
+</pre>
+
+                        </div>
+                    </li>
+                    <li>
+                    <h5>JSON</h5>
+                    <div class="inner">
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="mycode" data-code="JSON">{ "empinfo" :
+    {
+        "employees" : [
+        {
+            "name" : "James Kirk",
+            "age" : 40,
+        },
+        {
+            "name" : "Jean-Luc Picard",
+            "age" : 45,
+        },
+        {
+            "name" : "Wesley Crusher",
+            "age" : 27,
+        },
+                    ]
+    }
+}</pre>
+
+                    </div>
+                    </li>
+
+                </ul>
+
+            
+
+                <p>El uso de JSON y XML en la industria del desarrollo <em>software</em> de los últimos años se puede ver en la siguiente imagen:</p>
+
+                <figure>
+                    <img src="./JSON_files/m5t3fig06.png" alt="Gráfica de comparación">
+            
+                </figure>
+
+            </div>
+            </article>
+        </section>
+        <section id="3.3">
+            <article>
+                <div class="estrecho">
+                <h2 class="seccion"><span>3.3</span><strong>Componentes</strong></h2>
+                <p>Un JSON se compone de una estructura <strong>Nombre/Par de valores</strong>.</p>
+                <p>Para asignar a un nombre un valor, debemos usar los dos puntos <code class="boton">:</code>, este separador es el equivalente al igual (<code class="boton">=</code>) de cualquier lenguaje</p>
+
+                <pre class="pseudo">"Nombre" : "Manzana"</pre>
+
+                <p>JSON tiene dos componentes: <strong>objetos</strong> y <strong>arrays</strong>. Los objetos JSON se identifican <strong>entre llaves</strong> <code class="boton">{}</code>. Un objeto puede ser, en nuestro caso, una fruta o una verdura</p>
+
+<pre class="pseudo">{
+    "NombreFruta" : "Manzana",
+    "Cantidad" : 20
+}</pre>
+
+<p>Los <em>arrays</em> JSON se identifican <strong>entre corchetes</strong> <code class="boton">[]</code>. Representan una lista ordenada de valores. Pueden ser enteros, <em>booleanos</em>, <em>strings</em> u objetos.</p>
+
+<pre class="pseudo">"Frutas": 
+[
+    { "NombreFruta" : "Manzana", "Cantidad" : 10 }
+    { "NombreFruta" : "Pera", "Cantidad" : 20 }
+    { "NombreFruta" : "Naranja", "Cantidad" : 30 }
+]</pre>
+
+
+            </div>
+         
+            </article>
+        </section>
+        <section id="3.4">
+            <article>
+                <div class="estrecho">
+                <h2 class="seccion"><span>3.4</span><strong>JSON minificado y JSON View</strong></h2>
+
+                <p>En muchas ocasiones, se trabaja con archivos JSON, donde todos los espacios y saltos de línea han sido eliminados, buscando ocupar el mínimo espacio posible. Esta técnica se llama <strong>"minificado"</strong>. Minificar es conseguir que un fichero sea menos pesado modificando ciertos elementos: espacios innecesarios, saltos de línea, tabulaciones, comentarios.</p>
+
+                <p>El problema que presenta la minificación es que el fichero se vuelve confuso a la hora de ser leído o interpretado por humanos, pero no por los ordenadores.</p>
+                <p>Muchas veces se trabaja con JSON Minificado</p>
+
+                <pre class="pseudo">{"marcadores":[{"latitude":40.416875,"longitude":-3.703308,"city":"Madrid","description":"PuertadelSol"},{"latitude":40.417438,"longitude":-3.693363,"city":"Madrid","description":"PaseodelPrado"},{"latitude":40.407015,"longitude":-3.691163,"city":"Madrid","description":"EstacióndeAtocha"}</pre>
+
+                <p>Para visualizar archivos JSON se pueden utilizar multitud de herramientas, tanto online como en local, en el propio ordenador. Una de ellas es <a href="http://jsonviewer.stack.hu/">http://jsonviewer.stack.hu</a></p>
+
+            </div>
+            <figure class="full lightblue"> 
+                <div><img src="./JSON_files/M5U3-full1.svg" alt="Ilustracion" style="max-width:450px;"></div>
+            </figure>
+            </article>
+        </section>
+        <section id="3.5">
+            <article>
+                <div class="estrecho">
+                <h2 class="seccion"><span>3.5</span><strong>JSON en Python</strong></h2>
+                <p>Existe una estrecha relación entre los tipos de datos usados en Python y los tipos de datos JSON. En esta tabla la vemos:</p>
+                
+                <div class="tablagrid segundo" style="grid-template-columns: 1fr 1fr; max-width: 400px; margin:1.5rem auto 3rem; text-align:center;">
+                    <span class="header">Python</span><span class="header">JSON</span>
+                    <span>dict</span><span>Object</span>
+                    <span>list</span><span>Array</span>
+                    <span>tuple</span><span>Array</span>
+                    <span>str</span><span>String</span>
+                    <span>int</span><span>Number</span>
+                    <span>float</span><span>Number</span>
+                    <span>True</span><span>true</span>
+                    <span>False</span><span>false</span>
+                    <span>None</span><span>null</span>
+                </div>
+                
+                <p>A continuación, vamos a ver una serie de ejemplos sobre cómo interpretar y manipular datos en formato JSON. Para ello, utilizaremos el <strong>módulo <em>json</em></strong>.</p>
+
+                <p>En la actualidad, todos los lenguajes de programación disponen de módulos o librerías especializadas para el manejo de datos en formato JSON. En la <a href="https://www.json.org/json-es.html">web oficial de JSON</a>, en el final de la página, se encuentra un listado de más de 200 librerías y módulos para más de 60 lenguajes de programación diferentes</p>
+
+                <p>Primeramente, vamos a crear un JSON con el siguiente contenido</p>
+
+                
+<div class="grid python">
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [1]</pre>
+<pre class="mycode col7 pythonin">{
+    "Fruteria": [
+        {
+            "Fruta": [
+                {
+                    "Nombre": "Manzana",
+                    "Cantidad": 10
+                },
+                {
+                    "Nombre": "Pera",
+                    "Cantidad": 20
+                },
+                {
+                    "Nombre": "Naranja",
+                    "Cantidad": 30
+                }
+            ]
+        },
+        {
+            "Verdura": [
+                {
+                    "Nombre": "Lechuga",
+                    "Cantidad": 80
+                },
+                {
+                    "Nombre": "Tomate",
+                    "Cantidad": 15
+                },
+                {
+                    "Nombre": "Pepino",
+                    "Cantidad": 50
+                }
+            ]
+        },
+    ]
+}</pre>
+<pre class="col0">Out [1]</pre>
+<pre class="mycode col7 preout">{ "Fruteria": [{"Fruta": [{ "Nombre": "Manzana", "Cantidad": 10 },
+{ "Nombre": "Pera", "Cantidad": 20 }, { "Nombre": "Naranja", "Cantidad": 30 }]},
+{"Verdura": [{"Nombre": "Lechuga", "Cantidad": 80 }, { "Nombre": "Tomate", "Cantidad": 15 }, { "Nombre": "Pepino", "Cantidad": 50 }]}]}  </pre> 
+</div>
+
+            <p>Como podemos observar, hemos creado un objeto llamado <em>frutería</em> y, dentro de ese objeto, hemos almacenado un <em>array</em> de dos elementos. El primer elemento del <em>array</em> contiene un objeto llamado fruta y el segundo elemento del <em>array</em> contiene otro objeto llamado verdura. Estos objetos a su vez contienen un <em>array</em> cuyo contenido es el nombre y la cantidad de cada fruta o verdura.</p>
+
+            <p>Para acceder a un fichero JSON, usaremos la librería json, que importaremos como hemos hecho con otras librerías:</p>
+
+            <div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="mycode"><span class="color1">import</span> json</pre>
+
+            <p>Nuestro módulo <em>json</em>, el cual nos va a permitir manipular datos JSON, también nos permitirá crear y transformar datos que ya tengamos en nuestro programa, (variables) en datos JSON. Esto lo logrará gracias al codificador (<em>dumps</em>). Este codificador será capaz de transformar todo tipo de datos nativos de <em>Python</em>, como son: <code>string</code>, <code>unicode</code>, <code>int</code>, <code>float</code>, <code>list</code>, <code>tuple</code>, <code>dict</code>.</p>
+
+            <p>Para nuestro ejemplo, vamos a crear la estructura con diccionarios y listas.</p>
+
+            
+<div class="grid python">
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [2]</pre>
+<pre class="mycode col7 pythonin"><span class="coment"># Opcion 1 (iniciacion): Creación de las estructuras poco a poco, de dentro a fuera</span> 
+<span class="coment"># Diccionarios de las Frutas</span>
+
+dicc_frutas_1 = {
+    "Nombre": "Manzana",
+    "Cantidad": 10
+}
+<span class="color1">print</span>(dicc_frutas_1)
+
+dicc_frutas_2 = {
+    "Nombre": "Pera",
+    "Cantidad": 20 
+}
+<span class="color1">print</span>(dicc_frutas_2)
+
+dicc_frutas_3 = {
+    "Nombre": "Naranja",
+    "Cantidad": 30
+}
+<span class="color1">print</span>(dicc_frutas_3)
+
+<span class="coment"># Diccionarios de las Verduras</span>
+
+dicc_verduras_1 = {
+    "Nombre": "Lechuga",
+    "Cantidad": 80
+}
+<span class="color1">print</span>(dicc_verduras_1)
+
+dicc_verduras_2 = {
+    "Nombre": "Tomate",
+    "Cantidad": 15
+}
+<span class="color1">print</span>(dicc_verduras_2)
+
+dicc_verduras_3 = {
+    "Nombre": "Pepino",
+    "Cantidad": 50
+}
+<span class="color1">print</span>(dicc_verduras_3)
+</pre>
+<pre class="col0">Out [2]</pre>
+<pre class="mycode col7 preout">{'Nombre': 'Manzana', 'Cantidad': 10}  
+{'Nombre': 'Pera', 'Cantidad': 20}
+{'Nombre': 'Naranja', 'Cantidad': 30}
+{'Nombre': 'Lechuga', 'Cantidad': 80}
+{'Nombre': 'Tomate', 'Cantidad': 15}
+{'Nombre': 'Pepino', 'Cantidad': 50}  
+</pre>
+</div>
+
+                <p>Ya tenemos los diccionarios más internos de nuestra estructura, los que contienen la información de las frutas y de las verduras. Tenemos 3 diccionarios de frutas y 3 diccionarios de verduras, pero este número podría crecer rápidamente. La estructura lógica cuando tenemos una lista de variables, en este caso diccionarios, es una lista. Por lo tanto, introduciremos todos nuestros diccionarios de frutas dentro de una lista y haremos lo mismo con las verduras.</p>
+
+                
+<div class="grid python">
+    
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [3]</pre>
+<pre class="mycode col7 pythonin"><span class="coment"># Lista de frutas: Contiene los diccionarios de las frutas</span>
+lista_frutas = [dicc_frutas_1, dicc_frutas_2, dicc_frutas_3] 
+<span class="color1">print</span>(lista_frutas)
+
+<span class="coment"># Lista de verduras: Contiene los diccionarios de las verduras</span>
+lista_verduras = [dicc_verduras_1, dicc_verduras_2, dicc_verduras_3] 
+<span class="color1">print</span>(lista_verduras)
+</pre>
+<pre class="col0">Out [3]</pre>
+<pre class="mycode col7 preout">[{'Nombre': 'Manzana', 'Cantidad': 10}, {'Nombre': 'Pera', 'Cantidad': 20}, {'Nombre': 'Naranja', 'Cantidad': 30}]    
+[{'Nombre': 'Lechuga', 'Cantidad': 80}, {'Nombre': 'Tomate', 'Cantidad': 15}, {'Nombre': 'Pepino', 'Cantidad': 50}]
+</pre>
+</div>
+
+<p>En este momento tenemos 2 listas, las cuales incluyen las frutas y las verduras. Vamos a crear un diccionario que incluya estas listas:</p>
+ 
+<div class="grid python">
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [4]</pre>
+<pre class="mycode col7 pythonin">dicc_fruta_verdura = {
+    <span class="color3">"Fruta"</span>: lista_frutas,
+    <span class="color3">"Verdura"</span>: lista_verduras
+}
+<span class="color1">print</span>(dicc_fruta_verdura)</pre>
+<pre class="col0">Out [4]</pre>
+<pre class="mycode col7 preout">{"Fruta": [{ "Nombre": "Manzana", "Cantidad": 10 }, { "Nombre": "Pera", "Cantidad": 20 }, { "Nombre": "Naranja", "Cantidad": 30 }], {"Verdura": [{"Nombre": "Lechuga", "Cantidad": 80 }, { "Nombre": "Tomate", "Cantidad": 15 }, { "Nombre": "Pepino", "Cantidad": 50 }]}</pre>
+</div>
+<p>Sólo nos queda un detalle, la estructura que tenemos ya sería funcional, pero en muchas ocasiones se necesita un nodo central, una variable central y única, como entrada a nuestros datos. En nuestro caso, las dos primeras claves que encontraríamos serían “Fruta” y “Verdura”. Pero sería mejor que hubiese una clave única por encima de ellas. Por eso, vamos a crear la clave “Fruteria” que las englobe:</p>
+
+<div class="grid python">
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [5]</pre>
+<pre class="mycode col7 pythonin">dicc_fruteria = {
+    <span class="color3">"Fruteria"</span>: dicc_fruta_verdura
+}
+<span class="color1">print</span>(dicc_fruteria)</pre>
+<pre class="col0">Out [5]</pre>
+<pre class="mycode col7 preout">{'Fruteria:': {"Fruta": [{ "Nombre": "Manzana", "Cantidad": 10 }, { "Nombre": "Pera", "Cantidad": 20 }, { "Nombre": "Naranja", "Cantidad": 30 }], {"Verdura": [{"Nombre": "Lechuga", "Cantidad": 80 }, { "Nombre": "Tomate", "Cantidad": 15 }, { "Nombre": "Pepino", "Cantidad": 50 }]}}</pre>
+</div>
+
+<p>Nos fijamos que la salida por pantalla no ha cambiado respecto al ejemplo anterior. Pero resultará muy útil tener una clave principal (“Fruteria”) para temas más avanzados.</p>
+
+<p>El código completo para la creación de las estructuras es el siguiente:</p>
+
+
+
+<div class="grid python">
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [6]</pre>
+<pre class="mycode col7 pythonin"><span class="coment"># Opcion 1 (iniciacion): Creación de las estructuras poco a poco, de dentro a fuera</span> 
+<span class="coment"># Diccionarios de las Frutas</span>
+
+dicc_frutas_1 = {
+    "Nombre": "Manzana",
+    "Cantidad": 10
+}
+<span class="color1">print</span>(dicc_frutas_1)
+
+dicc_frutas_2 = {
+    "Nombre": "Pera",
+    "Cantidad": 20
+}
+<span class="color1">print</span>(dicc_frutas_2)
+
+dicc_frutas_3 = {
+    "Nombre": "Naranja",
+    "Cantidad": 30
+}
+<span class="color1">print</span>(dicc_frutas_3)
+
+<span class="coment"># Diccionarios de las Verduras</span>
+
+dicc_verduras_1 = {
+    "Nombre": "Lechuga",
+    "Cantidad": 80
+}
+<span class="color1">print</span>(dicc_verduras_1)
+
+dicc_verduras_2 = { 
+    "Nombre": "Tomate",
+    "Cantidad": 15
+}
+<span class="color1">print</span>(dicc_verduras_2)
+
+dicc_verduras_3 = {
+    "Nombre": "Pepino",
+    "Cantidad": 50
+}
+<span class="color1">print</span>(dicc_verduras_3)
+
+<span class="coment"># Lista de frutas: Contiene los diccionarios de las frutas</span>
+lista_frutas = [dicc_frutas_1, dicc_frutas_2, dicc_frutas_3] 
+
+<span class="coment"># Lista de verduras: Contiene los diccionarios de las verduras</span>
+lista_verduras = [dicc_verduras_1, dicc_verduras_2, dicc_verduras_3] 
+
+dicc_fruta = {
+    "Fruta": lista_frutas
+}
+dicc_verdura = {
+    "Verdura": lista_verduras
+}
+dicc_fruteria = {
+    "Fruteria": [dicc_fruta, dicc_verdura]
+}
+
+<span class="coment"># Imprimimos por pantalla el tipo y los datos</span>
+<span class="color1">print</span>(type(dicc_fruteria))
+<span class="color1">print</span>(dicc_fruteria)
+</pre>
+<pre class="col0">Out [6]</pre>
+<pre class="mycode col7 preout">&lt;class 'dict'&gt;
+{'Fruteria:': [{"Fruta": [{ "Nombre": "Manzana", "Cantidad": 10 }, { "Nombre": "Pera", "Cantidad": 20 }, { "Nombre": "Naranja", "Cantidad": 30 }], {"Verdura": [{"Nombre": "Lechuga", "Cantidad": 80 }, { "Nombre": "Tomate", "Cantidad": 15 }, { "Nombre": "Pepino", "Cantidad": 50 }]}]}</pre>
+</div>
+
+<p>Ahora vamos a crear la estructura de otra manera, directamente, mediante JSON minificado:</p>
+</div>
+<div class="ancho">
+<div class="grid python">   
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [7]</pre>
+<pre class="mycode col7 pythonin"><span class="coment"># Opcion 2 (avanzada): Crear la estructura directamente</span>
+dicc_fruteria = {'Fruteria:': [ {"Fruta":   [   { "Nombre": "Manzana", "Cantidad": 10 }, 
+                                                { "Nombre": "Pera", "Cantidad": 20 }, 
+                                                { "Nombre": "Naranja", "Cantidad": 30 } ]
+                                            
+                                {"Verdura": [   {"Nombre": "Lechuga", "Cantidad": 80 }, 
+                                                { "Nombre": "Tomate", "Cantidad": 15 }, 
+                                                { "Nombre": "Pepino", "Cantidad": 50 }  ]}]}
+
+<span class="coment"># Imprimimos por pantalla el tipo y los datos</span>
+<span class="color1">print</span>(<span class="color3">"Tipo de los datos:"</span>, type(dicc_fruteria))
+<span class="color1">print</span>(<span class="color3">"\nDatos en estructuras de datos de Python (diccionarios):\n"</span>)
+<span class="color1">print</span>(dicc_fruteria)
+</pre>
+<pre class="col0">Out [7]</pre>
+<pre class="mycode col7 preout">Tipo de los datos: &lt;class 'dict'&gt;
+
+Datos en estructuras de datos de Python (diccionarios):
+
+{'Fruteria:': [{"Fruta": [{ "Nombre": "Manzana", "Cantidad": 10 }, { "Nombre": "Pera", "Cantidad": 20 }, { "Nombre": "Naranja", "Cantidad": 30 }], {"Verdura": [{"Nombre": "Lechuga", "Cantidad": 80 }, { "Nombre": "Tomate", "Cantidad": 15 }, { "Nombre": "Pepino", "Cantidad": 50 }]}]}
+</pre>
+</div>
+</div>
+<div class="estrecho">
+
+<p>Una vez que tenemos la estructura creada, la codificamos en JSON (
+
+</p><div class="grid python">
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [8]</pre>
+<pre class="mycode col7 pythonin"><span class="coment"># Nos devuelve el String con el JSON</span>
+json_fruteria = json.dumps(dicc_fruteria)
+
+<span class="color1">print</span>("Tipo de los datos:", type(json_fruteria))
+<span class="color1">print</span>("\nDatos en JSON:\n")
+<span class="color1">print</span>(json_fruteria)
+</pre>
+<pre class="col0">Out [8]</pre>
+<pre class="mycode col7 preout"> 
+Tipo de los datos: &lt;class 'str'&gt;
+
+Datos en JSON:
+
+{'Fruteria:': [{"Fruta": [{ "Nombre": "Manzana", "Cantidad": 10 }, { "Nombre": "Pera", "Cantidad": 20 }, { "Nombre": "Naranja", "Cantidad": 30 }], {"Verdura": [{"Nombre": "Lechuga", "Cantidad": 80 }, { "Nombre": "Tomate", "Cantidad": 15 }, { "Nombre": "Pepino", "Cantidad": 50 }]}]}</pre>
+</div>
+
+<p>Comprobemos las diferencias entre ambas estructuras:</p>
+
+<div class="grid python">
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [9]</pre>
+<pre class="mycode col7 pythonin"><span class="color1">print</span>(dicc_fruteria)
+<span class="color1">print</span>()
+<span class="color1">print</span>(json_fruteria)    
+</pre>
+<pre class="col0">Out [9]</pre>
+<pre class="mycode col7 preout">{'Fruteria:': [{'Fruta': [{ 'Nombre': 'Manzana', 'Cantidad': 10 }, { 'Nombre': 'Pera', 'Cantidad': 20 }, { 'Nombre': 'Naranja', 'Cantidad': 30 }], {'Verdura': [{'Nombre': 'Lechuga', 'Cantidad': 80 }, { 'Nombre': 'Tomate', 'Cantidad': 15 }, { 'Nombre': 'Pepino', 'Cantidad': 50 }]}]}
+
+{"Fruteria:": [{"Fruta": [{ "Nombre": "Manzana", "Cantidad": 10 }, { "Nombre": "Pera", "Cantidad": 20 }, { "Nombre": "Naranja", "Cantidad": 30 }], {"Verdura": [{"Nombre": "Lechuga", "Cantidad": 80 }, { "Nombre": "Tomate", "Cantidad": 15 }, { "Nombre": "Pepino", "Cantidad": 50 }]}]}
+</pre>
+</div>
+
+<p>Ahora veremos el caso contrario, dado un dato en formato JSON, veremos cómo decodificarlo para transformarlo en tipos de datos manejables por <em>Python</em>. Para ello usaremos la función <code class="boton">json_loads()</code>:</p>
+
+<div class="grid python">
+
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [10]</pre>
+<pre class="mycode col7 pythonin"><span class="coment"># Disponemos de json_fruteria el cual contiene nuestra informacion en formato JSON</span>
+<span class="color1">print</span>(<span class="color3">"Tipo de los datos:"</span>, type(<span class="color2">json_fruteria</span>))    
+<span class="color1">print</span>(<span class="color3">"Datos en JSON:\n"</span>)
+<span class="color1">print</span>(<span class="color2">json_fruteria</span>)
+
+f_dict = json.loads(<span class="color2">json_fruteria</span>)
+<span class="color1">print</span>(<span class="color3">"\nTipo de los datos:"</span>, type(<span class="color2">f_dict</span>))
+<span class="color1">print</span>(<span class="color3">"Datos en estructuras de datos de Python (diccionarios):\n"</span>)
+<span class="color1">print</span>(<span class="color2">f_dict</span>)
+</pre>
+<pre class="col0">Out [10]</pre>
+<pre class="mycode col7 preout">Tipo de los datos: &lt;class 'str'&gt;
+Datos en JSON:
+
+{"Fruteria:": [{"Fruta": [{ "Nombre": "Manzana", "Cantidad": 10 }, { "Nombre": "Pera", "Cantidad": 20 }, { "Nombre": "Naranja", "Cantidad": 30 }], {"Verdura": [{"Nombre": "Lechuga", "Cantidad": 80 }, { "Nombre": "Tomate", "Cantidad": 15 }, { "Nombre": "Pepino", "Cantidad": 50 }]}]}
+
+Tipo de los datos: &lt;class 'dict'&gt;
+Datos en estructuras de datos de Python (diccionarios):
+
+{'Fruteria:': [{'Fruta': [{ 'Nombre': 'Manzana', 'Cantidad': 10 }, { 'Nombre': 'Pera', 'Cantidad': 20 }, { 'Nombre': 'Naranja', 'Cantidad': 30 }], {'Verdura': [{'Nombre': 'Lechuga', 'Cantidad': 80 }, { 'Nombre': 'Tomate', 'Cantidad': 15 }, { 'Nombre': 'Pepino', 'Cantidad': 50 }]}]}
+</pre>
+
+</div>
+
+
+                <p>Cuando tengamos objetos en formato JSON, que hemos visto que internamente son strings con un formato pre-estructurado, serán muy útiles para transferirlos a otros sitios o programas, por lo que el proceso normal de trabajo será:</p>
+
+                <div class="destacado tercero">
+                    <h5>Proceso de trabajo para intercambio de datos con JSON</h5>
+                    <ul>
+                        <li>Tener nuestros datos en estructuras propias de nuestro lenguaje (diccionarios, listas, tuplas).</li>
+                        <li>Codificarlo a un string con formato JSON.</li>
+                        <li>Enviarlo a otro sitio, programa o lenguaje.</li>
+                        <li>En el destino, recibir ese string con formato JSON.</li>
+                        <li>Decodificar dicho string y adaptarlo a las estructuras propias que tenga ese sistema, programa o lenguaje (que posiblemente sean diferentes a las de Python).</li>
+                    </ul>
+                </div>
+
+                <p>Este proceso se realiza así porque una estructura de datos diccionario no es igual en Python, en Java o en SQL. Por lo que no tiene sentido enviar unos datos desde Python a esos lenguajes en formato diccionario, ya que no lo van a entender. La estructura JSON es la que entienden todos los lenguajes.</p>
+                <p>Mediante las siguientes instrucciones, accedemos y mostramos diferentes partes de la estructura JSON:</p>
+
+<div class="grid python">
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [11]</pre>
+<pre class="mycode col7 pythonin"><span class="coment"># Ver el diccionario completo</span>
+<span class="color1">print</span>(<span class="color3">"Datos completos (tipo "</span>, type(f_dict), <span class="color3">")"</span>)    
+<span class="color1">print</span>(f_dict)
+
+<span class="color1">print</span>(<span class="color3">"\nJSON Object Fruta"</span>)
+<span class="color1">print</span>(f_dict[<span class="color3">'Fruteria'</span>][0])  <span class="coment"># JSON Object Fruta</span>
+<span class="color1">print</span>(<span class="color3">"\nJSON Object Verdura"</span>)
+<span class="color1">print</span>(f_dict[<span class="color3">'Fruteria'</span>][1])  <span class="coment"># JSON Object Verdura</span>
+
+<span class="color1">print</span>(<span class="color3">"\nJSON Object Fruta. Primer objeto del JSON Array"</span>)
+<span class="color1">print</span>(f_dict[<span class="color3">'Fruteria'</span>][0][<span class="color3">'Fruta'</span>][0]) <span class="coment"># JSON Object Fruta. Primer objeto del array</span>
+
+<span class="color1">print</span>(<span class="color3">"\nNumero de manzanas"</span>)
+<span class="color1">print</span>(f_dict[<span class="color3">'Fruteria'</span>][0][<span class="color3">'Fruta'</span>][0][<span class="color3">'Cantidad'</span>])  <span class="coment"># Numero de manzanas</span>
+</pre>
+<pre class="col0">Out [11]</pre>
+<pre class="mycode col7 preout">Datos completos (tipo &lt;class 'dict'&gt;)
+{'Fruteria:': [{'Fruta': [{ 'Nombre': 'Manzana', 'Cantidad': 10 }, { 'Nombre': 'Pera', 'Cantidad': 20 }, { 'Nombre': 'Naranja', 'Cantidad': 30 }], {'Verdura': [{'Nombre': 'Lechuga', 'Cantidad': 80 }, { 'Nombre': 'Tomate', 'Cantidad': 15 }, { 'Nombre': 'Pepino', 'Cantidad': 50 }]}]}
+
+JSON Object Fruta
+{'Fruta': [{ 'Nombre': 'Manzana', 'Cantidad': 10 }, { 'Nombre': 'Pera', 'Cantidad': 20 }, { 'Nombre': 'Naranja', 'Cantidad': 30 }]}
+
+JSON Object Verdura
+{'Verdura': [{'Nombre': 'Lechuga', 'Cantidad': 80 }, { 'Nombre': 'Tomate', 'Cantidad': 15 }, { 'Nombre': 'Pepino', 'Cantidad': 50 }]}
+
+JSON Object Fruta. Primer objeto del JSON Array
+{ 'Nombre': 'Manzana', 'Cantidad': 10 }
+
+Numero de manzanas
+10</pre>
+</div>
+
+<p>Ahora podemos ver un ejemplo completo de creación de un JSON, la decodificación del mismo y el acceso a sus objetos:</p>
+
+
+<div class="grid python">
+<div class="selectCode"><span onclick="selectCode(this)">Seleccionar código</span></div><pre class="col0">In [12]</pre>
+<pre class="mycode col7 pythonin"><strong class="color1">import</strong> json
+
+<span class="coment"># f es n JSON string y f_dict es un diccionario</span>
+<span class="coment"># Usamos comilla triple para ponerlo en más de una fila</span>
+f = '''{'Fruteria:': [{'Fruta': 
+                     [{ "Nombre": "Manzana", "Cantidad": 10 }, 
+                      { "Nombre": "Pera", "Cantidad": 20 }, 
+                      { "Nombre": "Naranja", "Cantidad": 30 }], 
+                      {"Verdura": 
+                     [{"Nombre": "Lechuga", "Cantidad": 80 }, 
+                      {"Nombre": "Tomate", "Cantidad": 15 }, 
+                      {"Nombre": "Pepino", "Cantidad": 50 }]}]}'''
+
+<span class="coment"># Decodificamos el JSON para transformarlo en un diccionario y trabajar con él más fácilmente</span>
+f_dict = json.loads(f) 
+
+<span class="coment"># Ver el diccionario completo</span>
+<span class="color1">print</span>(<span class="color3">"Datos completos"</span>)    
+<span class="color1">print</span>(f_dict)
+
+<span class="color1">print</span>(<span class="color3">"\nJSON Object Fruta"</span>)
+<span class="color1">print</span>(f_dict[<span class="color3">'Fruteria'</span>][0])  <span class="coment"># JSON Object Fruta</span>
+<span class="color1">print</span>(<span class="color3">"\nJSON Object Verdura"</span>)
+<span class="color1">print</span>(f_dict[<span class="color3">'Fruteria'</span>][1])  <span class="coment"># JSON Object Verdura</span>
+
+<span class="color1">print</span>(<span class="color3">"\nJSON Object Fruta. Primer objeto del JSON Array"</span>)
+<span class="color1">print</span>(f_dict[<span class="color3">'Fruteria'</span>][0][<span class="color3">'Fruta'</span>][0]) <span class="coment"># JSON Object Fruta. Primer objeto del array</span>
+
+<span class="color1">print</span>(<span class="color3">"\nNumero de manzanas"</span>)
+<span class="color1">print</span>(f_dict[<span class="color3">'Fruteria'</span>][0][<span class="color3">'Fruta'</span>][0][<span class="color3">'Cantidad'</span>])  <span class="coment"># Numero de manzanas</span>
+</pre>
+<pre class="col0">Out [12]</pre>
+<pre class="mycode col7 preout">Datos completos
+{'Fruteria:': [{'Fruta': [{ 'Nombre': 'Manzana', 'Cantidad': 10 }, { 'Nombre': 'Pera', 'Cantidad': 20 }, { 'Nombre': 'Naranja', 'Cantidad': 30 }], {'Verdura': [{'Nombre': 'Lechuga', 'Cantidad': 80 }, { 'Nombre': 'Tomate', 'Cantidad': 15 }, { 'Nombre': 'Pepino', 'Cantidad': 50 }]}]}
+
+JSON Object Fruta
+{'Fruta': [{ 'Nombre': 'Manzana', 'Cantidad': 10 }, { 'Nombre': 'Pera', 'Cantidad': 20 }, { 'Nombre': 'Naranja', 'Cantidad': 30 }]}
+
+JSON Object Verdura
+{'Verdura': [{'Nombre': 'Lechuga', 'Cantidad': 80 }, { 'Nombre': 'Tomate', 'Cantidad': 15 }, { 'Nombre': 'Pepino', 'Cantidad': 50 }]}
+
+JSON Object Fruta. Primer objeto del JSON Array
+{ 'Nombre': 'Manzana', 'Cantidad': 10 }
+
+Numero de manzanas
+10</pre>
+</div>
+
+ 
+
+            </div>
+            </article>
+        </section>
+ 
+    <section class="nav">
+       <!-- Se genera por Javascript -->
+    <article class="inner"><div class="curso"><p class="intro">Estás viendo:</p><p class="h4">Programación Python</p></div><div class="marcafooter"><div class="marca tokio"><a href="https://learning.tokioschool.com/" title="Volver a Tokio"></a></div></div></article></section>
+</main>
+    <footer>
+        <div class="gotop"><a href="https://learning.tokioschool.com/pluginfile.php/26613/mod_resource/content/1/py_M5_T3.html#top"></a></div>
+    </footer>
+
+<div class="lightbox"><div class="inner"></div></div></body></html>

@@ -1,0 +1,40 @@
+{
+    "jefe_proyecto": {
+        "Nombre": "Juan",
+        "Edad": 28,
+        "Experiencia": [
+            "Gestion",
+            "Finanzas",
+            "Bases de datos"
+        ],
+        "Residencia": "Madrid",
+        "HorasProyecto": 3500
+    },
+
+
+    "empleados": [
+        {
+            "Nombre": "Elena",
+            "Edad": 26,
+            "Experiencia": [
+                "JavaScript",
+                "Python"
+            ],
+            "Residencia": "Madrid",
+            "HorasProyecto": 500
+        },
+
+        
+        {
+            "Nombre": "Luis",
+            "Edad": 31,
+            "Experiencia": [
+                "Django",
+                "Flask",
+                "Pyramid"
+            ],
+            "Residencia": "Barcelona",
+            "HorasProyecto": 1100
+        }
+    ]
+}

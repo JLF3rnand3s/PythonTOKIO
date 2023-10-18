@@ -1,0 +1,913 @@
+function filename(){
+    var rutaAbsoluta = self.location.href;   
+    var posicionUltimaBarra = rutaAbsoluta.lastIndexOf("/");
+    var rutaRelativa = rutaAbsoluta.substring( posicionUltimaBarra + "/".length , rutaAbsoluta.length );
+    return rutaRelativa;  
+}
+
+var esteArchivo = filename();
+var codeArchivo = esteArchivo.slice(esteArchivo.indexOf("_") +1, esteArchivo.indexOf(".")); 
+var indexModulo = codeArchivo.slice( codeArchivo.indexOf("M")+1, codeArchivo.indexOf("_")); 
+var indexTema = codeArchivo.slice( codeArchivo.indexOf("_")+2); 
+
+
+
+function crearElemento(tipo){
+
+    if(tipo.includes(".")){
+        var elemento = tipo.substring(0, tipo.indexOf("."));
+        var clase = tipo.substring(tipo.indexOf(".")+1);
+
+        var resultado = document.createElement(elemento);
+        resultado.classList.add(clase);
+
+    } else {
+        var resultado = document.createElement(tipo);
+    }
+    return resultado;
+     
+}
+
+function crearMarca(sitio, marca) {
+    var nombreMarca = marca.toLowerCase();
+    if (marca == "35mm") {
+        nombreMarca = "treintaycinco";
+    }
+    var divMarca = crearElemento('div.marca');
+    var enlace = document.createElement('a');
+    divMarca.classList.add(nombreMarca); 
+    enlace.href = "/";
+    enlace.title = "Volver a "+marca;
+    divMarca.appendChild(enlace); 
+    sitio.appendChild(divMarca);
+}
+
+function crearMigas(nivel, estecurso){
+    var esteEnlace = document.createElement('a');
+    var estaMiga = crearElemento('span.miga');
+
+    var estaMigaCorta = crearElemento('span.migacorta');
+    var estaMigaLarga = crearElemento('span.migalarga');
+
+    switch(nivel) {
+        case "curso":
+            estaMiga.classList.add('migacurso');
+            estaMigaCorta.innerHTML = estecurso.codigoCurso; 
+            estaMigaLarga.innerHTML = estecurso.tituloCurso; 
+
+            if(estecurso.enlaceCursoPlataforma) {
+                esteEnlace.setAttribute('href', estecurso.enlaceCursoPlataforma)
+            } else {
+                esteEnlace.setAttribute('href', 'index.html')
+            } 
+
+            break;
+
+        case "semana":
+            estaMiga.classList.add('migasemana');
+            estaMigaCorta.textContent = "Semana";
+            break;
+        case "modulo":
+            estaMiga.classList.add('migamodulo');
+            estaMigaCorta.textContent = "Módulo " +indexModulo;
+            estaMigaLarga.innerHTML = estecurso.modulos[indexModulo].tituloModulo; 
+
+            if(estecurso.tienePortadas == 0) {
+                esteEnlace.setAttribute('href', estecurso.enlacesModulosPlataforma[indexModulo]); 
+            } else if(estecurso.tienePortadas > 0) {
+                esteEnlace.setAttribute('href', 'M'+indexModulo+'_portada.html') 
+            } 
+            
+            break; 
+        case "unidad":
+            estaMiga.classList.add('migatema');
+            estaMigaCorta.textContent = "Unidad " +indexTema;
+            estaMigaLarga.innerHTML = estecurso.modulos[indexModulo].temas[indexTema].tituloTema;
+            break;
+        default:
+            console.log("Indica el nivel de la miga");
+            break;
+    }
+
+    estaMiga.appendChild(estaMigaCorta);
+    estaMiga.appendChild(estaMigaLarga);
+    esteEnlace.appendChild(estaMiga); 
+
+    return esteEnlace;
+ 
+}
+
+function crearBreadcrumbs(sitio, curso){
+
+    var breadcrumbs = crearElemento('nav.breadcrumbs');
+
+    breadcrumbs.appendChild( crearMigas("curso", curso) ); 
+
+    if(curso.jerarquia == "modulos") {
+        breadcrumbs.appendChild( crearMigas("modulo", curso) ); 
+    } else if (curso.jerarquia == "semanas") {
+        breadcrumbs.appendChild( crearMigas("semana", curso) ); 
+    }; 
+    if( document.body.classList.contains('contenido') ) { 
+    breadcrumbs.appendChild( crearMigas("unidad", curso) );
+    }  
+    sitio.appendChild(breadcrumbs); 
+
+}   
+
+
+function medirMigas(){
+
+    var breadcrumbs = document.querySelector('nav.breadcrumbs')
+    var anchoMigas = breadcrumbs.offsetWidth;
+    var hijosMigas = breadcrumbs.children; 
+
+    var anchoLetra = 14; 
+
+    function calculo(){
+        var suma = 0;
+        for(var i=0; i < hijosMigas.length; i++) {
+            suma += hijosMigas[i].offsetWidth;
+        }
+        var espaciolibre = anchoMigas - suma;
+        return espaciolibre;
+    }
+
+    var ocultoMiga1 = hijosMigas[0].querySelector('.migalarga').innerText.length * anchoLetra;
+
+    if(hijosMigas.length == 3){ 
+        
+        var ocultoMiga2 = hijosMigas[1].querySelector('.migalarga').innerText.length * anchoLetra;
+        var ocultoMiga3 = hijosMigas[2].querySelector('.migalarga').innerText.length * anchoLetra; 
+      
+        if(calculo() > ocultoMiga3) {
+            hijosMigas[2].classList.add('cambia');
+
+            if(calculo() > ocultoMiga2) {
+                hijosMigas[1].classList.add('cambia');
+
+                if(calculo() > ocultoMiga1) {
+                    hijosMigas[0].classList.add('cambia');
+                }
+                else {  hijosMigas[0].classList.remove('cambia'); } 
+            }
+            else {  hijosMigas[1].classList.remove('cambia'); }
+        } 
+        else { hijosMigas[2].classList.remove('cambia');  }
+        
+    } else if (hijosMigas.length == 2){
+
+        var ocultoMiga2 = hijosMigas[1].querySelector('.migalarga').innerText.length * anchoLetra;
+   
+        if(calculo() > ocultoMiga2) {
+            hijosMigas[1].classList.add('cambia');
+
+            if(calculo() > ocultoMiga1) {
+                hijosMigas[0].classList.add('cambia');
+            }
+            else { hijosMigas[0].classList.remove('cambia'); }
+        }
+        else {
+            hijosMigas[1].classList.remove('cambia');
+        }
+    }
+}
+
+function selectCode(e) {
+    var doc = document
+        , text = $(e).closest("div").nextAll("pre.mycode").get(0)
+        , range, selection
+    ;
+    if (doc.body.createTextRange) {
+        range = document.body.createTextRange();
+        range.moveToElementText(text);
+        range.select();
+    } else if (window.getSelection) {
+        selection = window.getSelection();        
+        range = document.createRange();
+        range.selectNodeContents(text);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    }
+}
+
+function crearBurguer(sitio) {
+    var div1 = crearElemento('div.hamburger-box');
+    var div2 = crearElemento('div.hamburger-inner');
+    div1.classList.add("actionmenu"); 
+    div1.setAttribute('aria-label', 'menu');
+    div1.appendChild(div2);
+    sitio.appendChild(div1); 
+}
+
+
+function crearItemPortadas(sitio, contenido, tipo, curso) {
+    var itemPortada = crearElemento('div.grid-item');
+    var enlaceItemPortada = document.createElement('a');
+    var titleboxPortada = crearElemento('div.titlebox');
+    var h3portada = document.createElement('h3');
+    var spannumero = crearElemento('span.numero');
+    var spantitulo = crearElemento('span.titulo');
+    var summaryPortada = crearElemento('div.summary');
+    var pheader = crearElemento('p.header');
+
+    if(tipo == "unidades") {
+        spannumero.textContent = "Unidad " +contenido.numeroTema;  
+        spantitulo.textContent = contenido.tituloTema; 
+        enlaceItemPortada.setAttribute('href', curso.template.replace("M0_T0", contenido.codigoTema));
+        
+        if(contenido.contieneSecciones > 0) {
+            pheader.textContent = "Secciones";
+            summaryPortada.appendChild(pheader); 
+            for(var s = 1; s <= contenido.contieneSecciones; s++) {
+
+                var estaSeccion = contenido.secciones[s];
+                var parrafo = document.createElement('p');
+                var enlace = document.createElement('a');
+            
+                enlace.textContent = estaSeccion.ordenSeccion +". "+ estaSeccion.tituloSeccion;
+                enlace.setAttribute('href', curso.template.replace("M0_T0", contenido.codigoTema)+"#"+estaSeccion.ordenSeccion);
+
+                parrafo.appendChild(enlace)
+                summaryPortada.appendChild(parrafo); 
+            }
+        } else {
+            pheader.textContent = "Secciones";
+            summaryPortada.appendChild(pheader); 
+            
+            var parrafo = document.createElement('p');
+            var enlace = document.createElement('a');
+            enlace.textContent = contenido.numeroTema +".1. "+ contenido.tituloTema;
+            enlace.setAttribute('href', curso.template.replace("M0_T0", contenido.codigoTema)+"#"+contenido.numeroTema +".1");
+            parrafo.appendChild(enlace)
+            summaryPortada.appendChild(parrafo); 
+        }
+    }
+
+    if(tipo == "cuestionarios") {
+        spannumero.textContent = "Evaluación"; 
+        spantitulo.textContent = "Autoevaluaciones";
+        pheader.textContent = "Cuestionarios";
+        summaryPortada.appendChild(pheader);
+
+        for(var c = 1; c <= Object.keys(contenido).length; c++) {
+
+            if(contenido[c].cuestionario) {
+
+                var parrafo = document.createElement('p');
+                var enlace = document.createElement('a');
+
+                enlace.textContent = contenido[c].numeroTema + ". " + contenido[c].tituloTema;
+                enlace.setAttribute('href', contenido[c].cuestionario);
+
+                parrafo.appendChild(enlace)
+                summaryPortada.appendChild(parrafo); 
+                
+            }
+        }
+    }
+
+    if(tipo == "practicas") {
+        spannumero.textContent = "Evaluación"; 
+        spantitulo.textContent = "Practicas";
+        pheader.textContent = "Prácticas";
+        summaryPortada.appendChild(pheader);   
+
+        for(var p = 1; p <= Object.keys(contenido).length; p++) {
+
+                var parrafo = document.createElement('p');
+                var enlace = document.createElement('a');
+
+                enlace.textContent = contenido[p][0];
+                enlace.setAttribute('href', contenido[p][1]); 
+
+                parrafo.appendChild(enlace);
+                summaryPortada.appendChild(parrafo); 
+            
+        }
+   
+    }
+
+    if(tipo == "examen") {
+        spannumero.textContent = "Evaluación"; 
+        spantitulo.textContent = "Ir al examen de módulo";   
+        enlaceItemPortada.setAttribute('href', contenido);
+        enlaceItemPortada.setAttribute('title', "Ir al examen"); 
+        itemPortada.classList.add('examen2'); 
+/*
+        pheader.textContent = "Examen";
+        summaryPortada.appendChild(pheader); 
+
+        var parrafoex = document.createElement('p');
+        var enlaceex = document.createElement('a');
+
+        enlaceex.textContent = "Ir al examen";
+        enlaceex.setAttribute('href', contenido);
+        
+        parrafoex.appendChild(enlaceex);
+        summaryPortada.appendChild(parrafoex); */
+
+      
+    }
+    
+    h3portada.appendChild(spannumero);
+    h3portada.appendChild(spantitulo);
+    titleboxPortada.appendChild(h3portada);
+    enlaceItemPortada.appendChild(titleboxPortada);
+
+    itemPortada.appendChild(enlaceItemPortada);
+    itemPortada.appendChild(summaryPortada);
+
+    sitio.appendChild(itemPortada);
+}
+
+function bucleMenuTemas(sitio, esteModulo, codigoHtml){
+
+    for(var t = 1; t <= esteModulo.contieneTemas; t++){
+
+        var itemTema = document.createElement('li');
+        var enlaceTema = document.createElement('a');
+        
+        enlaceTema.innerText = t+". "+esteModulo.temas[t].tituloTema;
+
+        if(indexTema == t) {
+            itemTema.classList.add('active');
+        } else {
+            enlaceTema.setAttribute('href', codigoHtml+'_M'+indexModulo+'_T'+t+'.html')
+        }
+
+        itemTema.appendChild(enlaceTema);
+        sitio.appendChild(itemTema);
+
+    }//for
+
+}
+
+ 
+window.addEventListener('DOMContentLoaded', (event) => {
+
+    var esteCurso = cursosTODOS[document.body.dataset.curso];
+
+    if(window.location.hostname.includes("127")) {
+        esteCurso.navegaFooter = true;
+        
+    }
+    
+    function bodyclase(tipo){
+        return document.body.classList.contains(tipo);
+    }
+
+    var escontenido = false;
+    var esportadamodulo = false;
+    var esportadamodulounico = false;
+    var esportadacurso = false;
+
+    switch(true){
+        case bodyclase("contenido"):
+            escontenido = true;
+            switch(esteCurso.jerarquia){
+                case "modulos":
+                case "semanas":
+                    var esteModulo = esteCurso.modulos[indexModulo];
+                    var esteTema = esteModulo.temas[indexTema];
+                    break;
+        
+                case "unico":
+                    var esteModulo = esteCurso;
+                    var esteTema = esteCurso.temas[indexTema];
+                    break;
+                default:
+                    console.log("Este curso no tiene jerarquía");
+            }    
+            break; 
+
+        case bodyclase("portadamodulo"):
+            esportadamodulo = true;
+            indexModulo = esteArchivo.slice(1, esteArchivo.indexOf("_"));
+            indexTema = 0;
+            var esteModulo = esteCurso.modulos[indexModulo]; 
+            break;
+
+        case bodyclase("portadamodulounico"):
+            esportadamodulounico = true;
+            indexModulo = 1;
+            indexTema = 0;
+            var esteModulo = esteCurso; 
+            break;
+
+        case bodyclase("portadacurso"):
+            esportadacurso = true;
+            indexModulo = 0;
+            indexTema = 0;
+            break;
+
+        default:
+            console.log("Tipo de contenido no encontrado");
+    }
+
+    document.title = esteCurso.plataforma + " · " +esteCurso.tituloCurso; 
+
+    if(escontenido) {
+        document.querySelector('header > h1 span').textContent = indexTema;
+        document.querySelector('header > h1 p').innerHTML = esteTema.tituloTema;
+
+        if(esteTema.tituloTema.length > 70) {
+            document.querySelector('body > header').classList.add('muylargo');
+        } else if(esteTema.tituloTema.length > 50) {
+            document.querySelector('body > header').classList.add('largo');
+        }
+
+        $('h2.seccion').each(function(i){
+
+            var orden = crearElemento('span');
+            var tituloSec = crearElemento('strong');
+            var e = i+1;  
+    
+            if(esteTema.contieneSecciones > 0) {
+                tituloSec.innerHTML = esteTema.secciones[e].tituloSeccion;
+                orden.textContent = esteTema.secciones[e].ordenSeccion;
+            } else {
+                tituloSec.innerHTML = esteTema.tituloTema;
+                orden.textContent = esteTema.numeroTema+ "." +e; 
+            }
+            $(orden).prependTo(this);  
+            $(tituloSec).appendTo(this); 
+            
+        }); 
+
+        
+
+
+    }// FIN escontenido
+
+    $('.toolbar').each(function(){
+        crearMarca(this, esteCurso.plataforma);
+        if(escontenido || esportadamodulo) {  
+            crearBreadcrumbs(this, esteCurso);
+            medirMigas(); 
+        } else {
+            this.appendChild(crearElemento('nav.breadcrumbs'));
+        }
+        if (esteCurso.tieneMainmenu) {
+            crearBurguer(this); 
+        } 
+        
+    });   
+
+    if(esteCurso.tieneMainmenu) {
+
+        var mainmenu = document.querySelector('aside.mainmenu');
+        var enlaceCurso = crearElemento('a.h5');
+        enlaceCurso.textContent = "Portada del curso";
+    
+        if(esteCurso.enlaceCursoPlataforma) {
+            enlaceCurso.setAttribute('href', esteCurso.enlaceCursoPlataforma)
+        } else {
+            enlaceCurso.setAttribute('href', 'index.html')
+        } 
+    
+        mainmenu.appendChild(enlaceCurso);
+        crearBurguer(mainmenu);
+    
+        if(esteCurso.jerarquia == "modulos") {
+    
+            var menuModulos = crearElemento('ul.menumodulos');
+    
+            for(var m = 1; m <= esteCurso.contieneModulos; m++){
+    
+                var itemModulo = document.createElement('li');
+                var enlaceModulo = document.createElement('a');
+                enlaceModulo.innerText = 'Módulo ' +m;
+    
+                if(indexModulo == m) {
+                    itemModulo.classList.add('active');
+                } else {
+                    enlaceModulo.setAttribute('href', 'M'+m+'_portada.html');
+                }
+    
+                itemModulo.appendChild(enlaceModulo);
+                menuModulos.appendChild(itemModulo);
+    
+                if(m == indexModulo && escontenido) {
+                    var menuTemas = crearElemento('ul.menutemas');
+                    bucleMenuTemas(menuTemas, esteModulo, esteCurso.codigoHtml);
+                    menuModulos.appendChild(menuTemas);
+                }
+    
+            } // for
+    
+            mainmenu.appendChild(menuModulos);
+    
+    
+        } else if(esteCurso.jerarquia == "unico"){
+    
+            var menuTemas = crearElemento('ul.menutemas');
+            bucleMenuTemas(menuTemas, esteCurso, esteCurso.codigoHtml);
+            mainmenu.appendChild(menuTemas);
+    
+        }
+    
+        var actionmenu1 = document.querySelector('.toolbar .actionmenu');
+        var actionmenu2 = document.querySelector('.mainmenu .actionmenu'); 
+        function abrirMenu(){
+            mainmenu.classList.toggle('open');
+            document.querySelector('main').classList.toggle('rightmenu');
+            actionmenu1.classList.toggle('active');
+            actionmenu2.classList.toggle('active');
+            if( escontenido ){
+                medirMigas(); 
+            }
+        } 
+        actionmenu1.addEventListener('click', abrirMenu); 
+        actionmenu2.addEventListener('click', abrirMenu); 
+    
+    }
+
+    
+    // Animacion de la toolbar (subir o bajar)
+    window.onscroll = function(e) {
+        // "false" = direction down, "true" = up
+        if(this.oldScroll > this.scrollY){
+            $('.contenido .toolbar').css("top", "0px");
+        } else {
+            $('.contenido .toolbar').css("top", "-4rem");
+        };
+        this.oldScroll = this.scrollY;
+
+
+    }; 
+
+    $('.contenido .toolbar').append('<div class="progressbar"></div>');
+    function progress() {
+
+        var windowScrollTop = $(window).scrollTop();
+        var docHeight = $(document).height();
+        var windowHeight = $(window).height();
+        var progress = (windowScrollTop / (docHeight - windowHeight)) * 100;
+        var bgColor = '#EF4E31';
+      
+       
+        $('.progressbar').width(progress + '%');
+    }
+
+    progress();
+    $(document).on('scroll', progress);
+ 
+
+    $('section.nav').each(function(){
+       
+        var navInner = crearElemento('article.inner');
+        var navCurso = crearElemento('div.curso');
+        var navMarca = crearElemento('div.marcafooter');
+        var peIntro = crearElemento('p.intro');
+        var navh4 = crearElemento('p.h4');
+      
+        var introCurso = peIntro.cloneNode();
+        introCurso.textContent = "Estás viendo:";
+        navh4.textContent = esteCurso.tituloCurso;
+        navCurso.appendChild(introCurso);
+        navCurso.appendChild(navh4);
+       
+        crearMarca(navMarca, esteCurso.plataforma);
+
+        if(esteCurso.navegaFooter) {
+ 
+            var enlacePrev = document.createElement('a');
+            var introEnlace = peIntro.cloneNode();
+
+            var navh6 = crearElemento('p.h6');
+            var spannumero = crearElemento('span.numero');
+            var spantitulo = crearElemento('span.titulo');
+    
+            navh6.appendChild(spannumero);
+            navh6.appendChild(spantitulo);
+            enlacePrev.appendChild(introEnlace);
+            enlacePrev.appendChild(navh6);
+
+            var enlaceNext = enlacePrev.cloneNode(true);
+            enlacePrev.classList.add('anterior');
+            enlaceNext.classList.add('siguiente');
+        
+            $(enlacePrev).find('p.intro').text("Anterior:");
+            $(enlaceNext).find('p.intro').text("Siguiente:");
+        
+            navInner.appendChild(enlacePrev);
+            navInner.appendChild(enlaceNext);
+
+            if(escontenido) {
+                indexTema = parseInt(indexTema);
+
+                var temaPrev = esteModulo.temas[indexTema-1];
+                var temaNext = esteModulo.temas[indexTema+1]; 
+
+                function siguiente() {
+                    enlaceNext.setAttribute('href', esteArchivo.replace(codeArchivo, temaNext.codigoTema)); 
+                    enlaceNext.querySelector('.numero').textContent = "Unidad "+temaNext.numeroTema+":";
+                    enlaceNext.querySelector('.titulo').innerHTML = temaNext.tituloTema;
+                }
+                function anterior() {
+                    enlacePrev.setAttribute('href', esteArchivo.replace(codeArchivo, temaPrev.codigoTema));
+                    enlacePrev.querySelector('.numero').textContent = "Unidad "+temaPrev.numeroTema+":";
+                    enlacePrev.querySelector('.titulo').innerHTML = temaPrev.tituloTema; 
+                } 
+
+                if(indexTema <= 1) {
+                    enlacePrev.remove();  
+                    if(esteModulo.contieneTemas > 1) {
+                        siguiente();
+                    } else {
+                        enlaceNext.remove();
+                    }
+                   
+                } else if(indexTema >= esteModulo.contieneTemas) {
+                    anterior(); 
+                    enlaceNext.remove();
+                } else {
+                    anterior(); 
+                    siguiente();
+                }  
+            } else if (esportadamodulo) {
+
+                indexModulo = parseInt(indexModulo);
+ 
+                var temaPrev = esteCurso.modulos[indexModulo-1];
+                var temaNext = esteCurso.modulos[indexModulo+1]; 
+
+                function siguiente() {
+                    enlaceNext.setAttribute('href', 'M'+temaNext.numeroModulo+'_portada.html');   
+                    enlaceNext.querySelector('.numero').textContent = "Módulo "+temaNext.numeroModulo+":";
+                    enlaceNext.querySelector('.titulo').innerHTML = temaNext.tituloModulo;
+                }
+                function anterior() {
+                    enlacePrev.setAttribute('href', 'M'+temaPrev.numeroModulo+'_portada.html');  
+                    enlacePrev.querySelector('.numero').textContent = "Módulo "+temaPrev.numeroModulo+":";
+                    enlacePrev.querySelector('.titulo').innerHTML = temaPrev.tituloModulo; 
+                }  
+
+                if(indexModulo <= 1) {
+                    enlacePrev.remove();  
+                    siguiente();
+                } else if(indexModulo >= esteCurso.contieneModulos) {
+                    anterior(); 
+                    enlaceNext.remove();
+                } else { 
+                    anterior(); 
+                    siguiente();
+                }  
+
+            }
+
+        } 
+
+        navInner.appendChild(navCurso);
+        navInner.appendChild(navMarca);
+    
+        document.querySelector('section.nav').appendChild(navInner); 
+    
+    });
+
+
+ $('aside.toc').each(function(){
+
+            if(esteTema.contieneSecciones > 0) {
+
+                for(var s = 1; s <= esteTema.contieneSecciones; s++){
+                    var indexitem = document.createElement('p');
+                    var indexspan = document.createElement('span');
+                    var indexanchor = document.createElement('a');
+                    
+                    indexanchor.innerHTML = esteTema.secciones[s].tituloSeccion;
+                    indexanchor.setAttribute('href', '#'+esteTema.secciones[s].ordenSeccion);
+                    indexspan.textContent = esteTema.secciones[s].ordenSeccion;
+
+                    indexitem.appendChild(indexspan);
+                    indexitem.appendChild(indexanchor);
+                    this.appendChild(indexitem);
+                }
+
+            } else {
+                var indexitem = document.createElement('p');
+                var indexspan = document.createElement('span');
+                var indexanchor = document.createElement('a');
+                
+                indexanchor.innerHTML = esteTema.tituloTema;
+                indexanchor.setAttribute('href', '#'+esteTema.numeroTema+".1");
+                indexspan.textContent = esteTema.numeroTema+".1";
+ 
+                indexitem.appendChild(indexspan); 
+                indexitem.appendChild(indexanchor);
+                this.appendChild(indexitem);
+
+                esteTema.contieneSecciones = 1;
+            }
+
+            $(this).prepend('<h3 class="noborder">Sumario</h3>')
+
+        }); 
+
+
+    // CONTENIDO 
+
+    $('ul.newtabs').each(function(){
+        if(visualViewport.width > 550){
+            $('h5').click(function(){
+                $(this).closest('li').siblings().find('div.inner').slideUp(400); 
+                $(this).next('div.inner').slideDown(800);   
+                $(this).closest('li').siblings().removeClass('active');   
+                $(this).closest('li').addClass('active');     
+            });
+        }
+    }); 
+
+
+
+
+    var listSliders = document.querySelectorAll(".slider");         
+    
+    listSliders.forEach(
+        function (currentValue) {
+        
+            let thisInner = currentValue.firstElementChild; 
+            let totalSlides = thisInner.children.length;
+            let anchoSlide = thisInner.scrollWidth / totalSlides;
+            let thisControl = currentValue.lastElementChild;
+
+            // Crear puntitos
+            for(var i=1; i<=totalSlides; i++){
+                thisControl.appendChild( crearElemento("span.dot") );
+            }
+            
+            // Funcion puntitos
+            let thisScroll = Math.round(thisInner.scrollLeft / anchoSlide);
+
+            if( Number.isInteger(thisScroll) ) {
+                thisControl.children[thisScroll].classList.add('active');
+            } else {
+                thisControl.firstElementChild.classList.add('active'); 
+            } 
+            
+            let navDots = currentValue.querySelectorAll('span.dot');
+
+            navDots.forEach(
+                function (currentValue, currentIndex) {
+                    
+                    currentValue.addEventListener('click', function(){
+                        navDots.forEach( function (currentValue) { currentValue.classList.remove('active'); }); 
+                        currentValue.classList.add('active'); 
+                        let movimiento = currentIndex * anchoSlide;
+                        thisInner.scrollLeft = movimiento;
+                    })
+                }  
+            ); 
+
+            currentValue.querySelector('.prev').addEventListener('click', function(){
+                thisInner.scrollLeft -= anchoSlide;
+                var dotactivo = thisControl.querySelector('.active');
+                if (dotactivo.previousElementSibling) {
+                    dotactivo.classList.toggle('active');
+                    dotactivo.previousElementSibling.classList.toggle('active');
+                }
+                
+            });
+            currentValue.querySelector('.next').addEventListener('click', function(){
+                thisInner.scrollLeft += anchoSlide;
+                var dotactivo = thisControl.querySelector('.active');
+                if (dotactivo.nextElementSibling) {
+                    dotactivo.classList.toggle('active');
+                    dotactivo.nextElementSibling.classList.toggle('active');
+                }
+            }); 
+
+        }    
+    ); 
+
+
+    
+
+
+      
+    $('article.oculto').each(function(){
+        
+        $(this).children('header').click(function(){
+            $(this).next('.inner').slideToggle(500);
+            $(this).toggleClass('active');
+        })
+    });
+
+    var lightbox = crearElemento('div.lightbox');
+    var lightboxInner = crearElemento('div.inner');
+    var imglightbox = new Image();
+
+    
+    lightbox.appendChild(lightboxInner);
+    document.body.appendChild(lightbox); 
+
+    $('figure.lupa img').click(function(){
+
+        imglightbox.src = $(this).attr('src');
+        $(lightboxInner).css("background-image", "url(" +imglightbox.src+ ")");
+        var imagenAncha = imglightbox.width > (visualViewport.width - 100);
+        var imagenAlta = imglightbox.height > (visualViewport.height - 100);
+
+            if((imagenAncha) || (imagenAlta)) {
+                $(lightboxInner).css('width','100%');
+                $(lightboxInner).css('height','100%');
+            } else {
+                $(lightboxInner).css('width',imglightbox.width);
+                $(lightboxInner).css('height',imglightbox.height);
+            }
+
+            $('.lightbox').fadeIn(500).css("display", "flex");
+    });
+    $(lightbox).click(function(){
+        $(lightbox).fadeOut(500);
+    });
+
+    
+    if(esteCurso.tieneEvaluacion > 0 && escontenido) {
+        if(esteTema.cuestionario) {
+            
+            var autoEval = document.querySelector('main').insertBefore(crearElemento('section.autoeval'), document.querySelector('section.nav')); 
+
+            autoEval.appendChild( crearElemento('article') ).appendChild( crearElemento('div.estrecho') ).appendChild( crearElemento('h2') ).textContent = "Autoevaluación"; 
+            document.querySelector('section.autoeval .estrecho').appendChild( crearElemento('a.auto') ).textContent = "Ir al cuestionario"; 
+            document.querySelector('section.autoeval a.auto').setAttribute('href', esteTema.cuestionario);
+             
+        }
+    }
+
+    
+
+
+    if(esportadamodulo) {
+
+        var moduleinfo = document.querySelector('.moduleinfo');
+
+        var numModPortada = crearElemento('h1.auto'); 
+        numModPortada.textContent = "Módulo " +esteModulo.numeroModulo;  
+ 
+        var titModPortada = crearElemento('h2.auto'); 
+        titModPortada.textContent = esteModulo.tituloModulo; 
+
+        moduleinfo.appendChild(numModPortada); 
+        moduleinfo.appendChild(titModPortada); 
+
+
+        var gridUnidades = document.querySelector('.grid-unidades');
+
+        for(j=1; j <= esteModulo.contieneTemas; j++) {
+            crearItemPortadas(gridUnidades, esteModulo.temas[j], "unidades", esteCurso);
+        }
+
+        if(esteCurso.tieneEvaluacion > 0) {
+
+            var mainparent = document.querySelector('main');
+            var nuevoh2 = document.createElement('h2');
+            var gridEvaluables = crearElemento('section.grid-practicas');
+            gridEvaluables.dataset.eval = esteCurso.tieneEvaluacion;
+
+            nuevoh2.textContent = "Evaluación";
+            
+            crearItemPortadas(gridEvaluables, esteModulo.temas, "cuestionarios");
+            crearItemPortadas(gridEvaluables, esteModulo.practicas, "practicas");
+            crearItemPortadas(gridEvaluables, esteModulo.examen, "examen");
+
+            mainparent.insertBefore(gridEvaluables, document.querySelector('section.nav'));
+            mainparent.insertBefore(nuevoh2, gridEvaluables);
+
+        }       
+
+        var titleboxes = document.querySelectorAll('.grid-unidades .titlebox');
+        var alturasPortada = [];
+
+        titleboxes.forEach(
+            function(node){
+                alturasPortada.push(node.offsetHeight);
+            },
+            titleboxes 
+        ); 
+
+        var alturaMax = Math.max.apply(null, alturasPortada)+"px"; 
+
+        titleboxes.forEach(
+            function(node){
+                node.style.height = alturaMax;
+            },
+            titleboxes  
+        );      
+        
+    }
+
+
+
+    if(escontenido || esportadamodulo) {
+        window.addEventListener('resize', medirMigas);
+    }
+
+     // Seleccionar codigo (SOLO TOKIO)
+
+     $("pre.mycode:not(.preout,.pythonin)").before('<div class="selectCode"><span onClick="selectCode(this)">Seleccionar código</span></div>');
+     $(".pythonin").prev('pre').before('<div class="selectCode"><span onClick="selectCode(this)">Seleccionar código</span></div>');
+
+
+});

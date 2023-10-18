@@ -1,0 +1,936 @@
+/*** NEW STYLE TOKIO MAYO 2022 ***/
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+@font-face {
+    font-family: 'Walsheim Pro';
+    src: url('branding/WalsheimPro/GTWalsheimPro-Bold.woff2') format("woff2"),
+            url('branding/WalsheimPro/GTWalsheimPro-Bold.woff') format("woff");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Walsheim Pro';
+    src: url('branding/WalsheimPro/GTWalsheimPro-BoldOblique.woff2') format("woff2"),
+            url('branding/WalsheimPro/GTWalsheimPro-BoldOblique.woff') format("woff");
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Walsheim Pro';
+    src: url('branding/WalsheimPro/GTWalsheimPro-Regular.woff2') format("woff2"),
+            url('branding/WalsheimPro/GTWalsheimPro-Regular.woff') format("woff");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Walsheim Pro';
+    src: url('branding/WalsheimPro/GTWalsheimPro-RegularOblique.woff2') format("woff2"),
+        url('branding/WalsheimPro/GTWalsheimPro-RegularOblique.woff') format("woff");
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Tiempos';
+    src: local('Tiempos Bold Italic'), local('TiemposText-BoldItalic'),
+        url('branding/Tiempos/TiemposText-BoldItalic.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Tiempos';
+    src: local('Tiempos Bold'), local('TiemposText-Bold'),
+        url('branding/Tiempos/TiemposText-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Tiempos';
+    src: local('Tiempos Italic'), local('TiemposText-Italic'),
+        url('branding/Tiempos/TiemposText-Italic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Tiempos';
+    src: local('Tiempos Regular'), local('TiemposText-Regular'),
+        url('branding/Tiempos/TiemposText-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+
+:root {
+    
+    /* COLORES */
+
+    --primero170: #1C132D;
+    --primero150: #2C233D; 
+    --primero130: #000b6f;
+    --primero100: #000f9f; 
+    --primero40:  #999fd9;
+    --primero20:  #c9cefb; 
+
+    --segundo100: #ff647e;
+    --segundo60:  #ffa2b2;
+    --segundo40:  #ffc1cb;  
+    --segundo20:  #ffe0e5;
+
+    --tercero100: #30d9c4; 
+    --tercero60:  #83e8dc;
+    --tercero40:  #acf0e7;
+    --tercero20:  #d6f7f3;  
+
+    --segundoAA: #CF344F;    
+    --terceroAA: #00a794; 
+    --extra: darkorange; 
+
+    
+    /*Neutros */
+
+    --negro: var(--primero170); 
+    --neutro20: var(--primero150); /* Color general del texto */
+    /* --neutro40: #404040;  */
+    /* --neutro60: #606060; */
+    --neutro60: #646275; /*mod*/  
+    /* --neutro80: #808080; */
+    --neutroA0: #9492a5; /*mod*/
+    --neutroC0: #C7C6CC; /*mod*/
+    /* --neutroE0: #e0e0e0; */
+    --blanco: #fcfbf8;
+
+    --acierto: var(--tercero20);
+    --fallo: var(--segundo20); 
+    --acierto2: var(--terceroAA); 
+    --fallo2: var(--segundoAA);
+
+    --acento: var(--primero100);
+    --acento40: var(--primero40);
+    --acento20: var(--img-lightblue);
+    --sombras: rgba(0,0,0,0.2);
+
+
+    /* Ilustraciones Tokio */
+
+    --img-violet: #b79be5;
+    --img-lightblue: #c9cefb;
+    --img-mediumblue: #4a56bf;
+    --img-darkblue: #181068;
+    --img-green: #4b978c;
+    --img-yellow: #f8d976;
+    --img-orange: #f0a143;
+    --img-red: #e84a4a;
+    --img-lightpink: #ffc0cb;
+
+    --gradient-primero: linear-gradient(90deg, var(--primero100), var(--primero150));
+    --gradient-oscuro: linear-gradient(90deg, var(--primero130), var(--primero150));    
+
+    /* TIPOGRAFIAS */
+ 
+    --titulo: "Walsheim Pro", "Arial Black", Helvetica, sans-serif;
+    --redonda: "Walsheim Pro", "Arial", Helvetica, sans-serif;
+    --cuadrada: 'Titillium Web', "Arial", helvetica, sans-serif;
+    --texto: 'Tiempos', "Times New Roman", Times, serif;
+    --mono: 'Roboto Mono', 'Courier New', Courier, monospace;
+
+    /* MEDIDAS Ancho maximo */
+
+    --estrecho: 750px;
+    --ancho: 1000px; 
+} 
+
+/*** 1. DEFINICIONES ***/
+
+.tokio {
+    background-image: url('branding/logo-tokio.png');  
+} 
+
+body {
+    background-color: var(--blanco);
+}
+a {
+    color: var(--segundoAA);
+    transition: 0.5s;
+}
+a:hover {
+    color: var(--primero100); 
+}
+
+body.contenido > header, body.contenido main > header {
+    background: linear-gradient(90deg, var(--primero100), var(--primero150));
+}
+
+aside.mainmenu {
+    background-color: var(--negro);
+}
+
+body.contenido h2 {
+    border-top: solid 0.25rem var(--segundo100);
+    padding: 0.4em 0;
+}
+
+body.contenido h2 > strong {
+    color: var(--primero150); 
+}
+
+body.contenido h3:not(.noborder) {
+    padding-top: 0.5em;
+    border-top: solid 0.15rem;
+}
+
+article.practicahana h2 {
+    display:flex;
+    flex-direction:column;
+    --segundo100: var(--primero100);
+}
+
+article.practicahana {
+    --grishana: #e2e2e8A0;
+    background: var(--grishana); 
+    padding: 1.5rem 0;
+    position: relative; 
+} 
+
+article.practicahana.tercio {
+    --grishana: transparent; 
+    margin:1.5rem 0;  
+}
+
+article.practicahana.fin { 
+    background: linear-gradient(transparent,var(--grishana)); 
+    margin:1.5rem 0; 
+}
+
+article.practicahana::before, 
+article.practicahana::after {
+    content: '';
+    position: absolute; 
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 2.25rem 2.25rem 0 2.25rem;
+    left: 4.5rem; 
+}
+article.practicahana.tercio::before, 
+article.practicahana.tercio::after,
+article.practicahana.fin::before  {
+    border-width:0; 
+} 
+
+article.practicahana::before {
+    border-color: var(--blanco) transparent transparent transparent;
+    top: 0;
+}  
+article.practicahana::after {
+    border-color: var(--grishana) transparent transparent transparent;
+    bottom: -2.20rem;
+}        
+
+article.practicahana .enunciado {
+   
+    font-family: var(--redonda);
+    font-size: 1.1em;
+    font-weight: bold;
+    line-height: 150%;
+    color: var(--primero130);
+
+}
+
+@media screen and (min-width:800px) { 
+    article.practicahana::before, article.practicahana::after {
+        left: calc(50% - var(--estrecho) / 2);
+    } 
+} 
+
+article.practicahana h4 {
+    --segundo100: var(--segundoAA);
+    background: var(--primero100);
+    color: var(--blanco); 
+    padding:0.375rem 0.75rem; 
+    max-width:fit-content
+}
+article.practicahana p.nota.extra {
+    --acento20: var(--img-yellow);
+    --acento: var(--img-darkblue);
+}
+article.practicahana p.nota.extra code{
+    --acento20: rgba(255,255,255,0.5);
+    font-weight:bold; 
+}
+article.practicahana .numerosgrandes {
+    --acento: var(--primero100);
+} 
+    
+/** Estructura Footer **/
+
+section.nav {
+    background: linear-gradient(90deg, var(--primero130), var(--primero150));
+}
+section.nav .curso .intro {
+    color: var(--primero40);
+    font-size:0.9em;
+}
+
+
+/*** Contenido - Componentes ***/
+
+mark.neon {
+    background: var(--tercero100);
+}
+
+.violet {
+    --acento: var(--img-violet);
+}
+.mediumblue {
+    --acento: var(--img-mediumblue);
+}
+.lightblue {
+    --acento: var(--img-lightblue);
+}
+.green {
+    --acento: var(--img-green);
+}
+.yellow {
+    --acento: var(--img-yellow);
+}
+.orange {
+    --acento: var(--img-orange);
+}
+.red {
+    --acento: var(--img-red);
+}
+.lightpink {
+    --acento: var(--img-lightpink);
+} 
+
+.primerparrafo {
+    font-family: var(--redonda);
+    letter-spacing: -1px;
+}
+.primerparrafo u { 
+    text-decoration-color: var(--segundo100); 
+    text-decoration-thickness: 0.1rem;
+}
+
+.parrafocompleto {
+    --acento: var(--img-lightblue); 
+}
+.parrafocompleto.primero {
+    --acento: var(--primero100);
+    color: var(--blanco);
+}
+
+
+ul.desplega {
+    --acento: var(--segundo100);
+}
+ul.desplega.tercero {
+    --acento: var(--terceroAA);
+}
+
+.listbullet > li::before {
+    font-family: var(--redonda);
+}
+
+.listbullet ul {
+    list-style-type:disc;
+    padding-left: 1.5rem;
+}
+
+.destacado > ul > li::marker {
+    content: "\203A\00A0\00A0"; 
+    line-height:100%;
+}
+
+ol.numerosgrandes li::marker {
+    font-family: var(--redonda);
+    color: var(--acento);
+}
+
+.destacado.extra {
+    --acento: var(--extra); 
+}
+
+.destacado.tercero {
+    --acento: var(--terceroAA);
+}
+
+
+
+/*** ICONOS Y GRAFICOS ***/
+
+.flechavariable {
+    --acento: var(--primero100);
+    width: 2rem;
+    transform: rotate(90deg);
+    align-self: center;
+}
+
+.objeto {
+    background:var(--acento20);
+    border: solid 0.1rem var(--acento);
+    font-family: var(--mono);
+    padding-bottom:0.5em;
+}
+.objeto.azul {
+    --acento: var(--primero100);
+    --acento20: var(--primero20);
+}
+.objeto.verde {
+    --acento: var(--tercero100);
+    --acento20: var(--tercero20);
+}
+.objeto.rosa {
+    --acento: var(--segundo100);
+    --acento20: var(--segundo20);
+}
+.objeto p, .objeto h5 {
+    margin: 0;
+    padding: 0 0.5rem;
+    line-height: 150%;
+}
+.objeto h5 {
+    margin: 0.5em 0;
+    text-align:center; 
+}
+.objeto hr {
+    border-color:var(--acento);
+}
+.objeto ul {
+    margin:0;
+    padding-left:1.5rem;
+}
+.llave {
+    border: solid 0.15rem var(--segundo100);
+    border-right: none;
+    position: relative;
+}
+
+
+.pastilla.primero {
+    color: var(--blanco); 
+} 
+.pastilla.primero20 {
+    --acento: var(--primero20); 
+}
+
+.pastilla.segundo60 {
+    --acento: var(--segundo60); 
+}
+.pastilla.tercero60 {
+    --acento: var(--tercero60); 
+}
+.pastilla.tercero40 {
+    --acento: var(--tercero40); 
+}
+.pastilla.tercero20 {
+    --acento: var(--tercero20); 
+}
+.pastilla.rombo2 {
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+.cuadcentro {
+    aspect-ratio:1;
+    justify-content: center;
+    align-items: center;
+    text-align:center; 
+    display:flex; 
+}
+
+.nubepalabras {
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+.nubepalabras code {
+    background-color: var(--acento20);
+}
+
+.tablagrid pre.pseudo {
+    margin: 0;
+    box-shadow: none;
+  }
+  .tablagrid.segundo pre.pseudo {
+    --acento: var(--segundoAA);
+  }
+
+
+/** CODIGOS TOKIO */
+
+code {
+    --acento20: var(--img-lightblue);
+    background: var(--acento20);
+    padding: 0.1rem 0.2rem;
+    border-radius: 0.2rem;
+    font-family: var(--mono);
+    
+}
+
+code.tecla {
+    width:1em;
+    display: inline-block;
+    text-align: center;
+    line-height: 1.25em; 
+    --acento20: var(--segundo40);
+}
+
+code.ruta {
+    --acento20: var(--tercero20);
+}
+code.boton, h4 code {
+    --acento20: var(--segundo20);
+}
+
+pre {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    max-width: 100%;
+    box-sizing: border-box;
+    white-space: pre-wrap; 
+    --tab-size: 0.75rem;
+}
+
+pre:where(.pseudo,.mycode) {
+    --acento: var(--primero100); 
+    border-left: solid 0.3rem;
+    padding: 1rem;
+    color: var(--acento);
+    box-shadow: var(--sombras) 0px 2px 10px -2px;
+    line-height: 170%;
+    overflow: auto;
+    position:relative;
+    margin-top:0;
+    margin-bottom:3rem; 
+    background:#fff; 
+} 
+
+pre:where(.pseudo,.mycode).margin-xs {
+    margin-bottom:0.75rem;   
+}
+
+pre:where(.pseudo,.mycode)::after {
+    content: attr(data-code);
+    position: absolute; 
+    bottom: 0;
+    right: 0;
+    padding: 1em;
+    font-size: smaller;
+    color: var(--img-mediumblue);
+}
+
+pre.ruta {
+    --acento: var(--terceroAA);
+}
+
+pre.preout {
+    background-color: var(--img-lightblue);
+    color: var(--primero130)
+}
+
+pre .coment {
+    font-style: italic;
+    color:mediumslateblue;
+}
+ 
+pre .color1 {
+    color: var(--segundoAA);
+}
+pre .color2 {
+    color: var(--extra);
+}
+pre .color3 {
+    color: var(--terceroAA);
+} 
+pre .color4 { 
+    color:slategray; 
+}
+
+.selectCode {
+    text-align: right;
+    font-size: 0.8rem;
+    font-family: var(--mono);
+    grid-column:1/3;
+  }
+
+  .selectCode span {
+    cursor: pointer;
+    color: var(--segundo100);
+    transition:0.25s;
+  }
+
+  .selectCode span:hover {
+    color: var(--primero100);
+  } 
+
+/** PYTHON **/
+
+.grid.python {
+    margin:1.5rem 0 3rem;  
+    display:block;
+}
+.grid.python .pythonin { 
+    width: 100%;
+    margin-bottom: 0;  
+}
+
+.grid.python pre.col0 {
+    color: var(--segundoAA);
+    margin: 0;  
+    display:none;
+}
+.grid.python .pythonout { 
+    margin-top:1em; 
+}
+
+@media screen and (min-width:500px) {
+    .grid.python {
+        display:grid;
+        grid-template-columns: 3.75rem 1fr;
+        grid-gap:0.75rem; 
+    }
+    .grid.python pre.col0 {
+        display: block;
+    }
+    .grid.python .selectCode {
+        position: relative;
+        top:0.75rem; 
+    }
+    .grid.python .pythonout { 
+        margin-top:0; 
+    }
+    
+}
+
+/** LATEX (MACHINE LEARNING) **/
+figure.math {
+    max-width:100%; 
+    overflow-x: auto;
+}
+
+.formula-mathjax {
+    font-size: clamp(1rem, 0.75rem + 1.3333vw, 1.5rem);
+    user-select:none;
+    color: var(--primero100); 
+    pointer-events: none;
+}
+span.latexin { font-size: 1.1em; line-height:150%; }
+.leyendalatex :where(h5,li,p){
+    font-size:0.9em;
+    margin: 0.25rem 0;
+    line-height:150%;
+    
+} 
+.leyendalatex {
+    --acento: var(--neutroA0); 
+
+}
+
+figure.math.font-xs .formula-mathjax {
+    font-size: clamp(0.75rem, 0.5rem + 1.3333vw, 1.25rem);
+}
+
+
+/** Componentes **/
+
+.newobjeto {
+    border: solid 1px var(--acento); 
+}
+.newobjeto > h5 {
+    background: var(--acento);
+    margin: 0 0 0.75rem;;
+    text-align:center;
+    padding:0.75rem;
+    color:var(--blanco);
+}
+.newobjeto > p {
+    margin:0 1em 1em;
+    line-height: 150%;
+}
+.newobjeto > :where(ul,ol) { 
+    margin:0 0 0.75rem;
+    padding: 0 1.5rem 0 2.25rem; 
+}
+.newobjeto > :where(ul,ol) > li {
+    margin:0;
+} 
+.newobjeto.tercero {
+    --acento: var(--terceroAA);
+}
+
+
+.notagrande {
+    font-family: var(--redonda);
+    font-size:1.5rem;
+    line-height: 150%;
+    margin: 3rem 0;
+}
+
+/** PORTADAS **/
+
+body.portadamodulo, body.portadamodulounico { 
+    --azul-portadas: rgb(72, 68, 163);
+    --acento: var(--img-lightblue);
+
+    background: var(--azul-portadas);
+} 
+
+.portadamodulo .moduleinfo h1, .portadamodulo .moduleinfo h2, .portadamodulo h2 {
+    color: var(--blanco);
+}  
+ 
+body.portadamodulounico h1 {
+    color: white; 
+} 
+
+body:not(.contenido) main > header {
+    background: var(--primero130);
+}
+.grid-item h3 { 
+    color: var(--primero130);
+}
+
+
+.portadacurso h1.manual {
+  color: var(--primero130);
+  line-height: 125%;
+  text-align: center;
+  font-size: 3rem;
+  max-width: 1000px;
+  margin-bottom: 0;
+}
+
+
+/** Componente - Enlace Cuestionario (Tokio) **/
+
+a.auto {
+    background: var(--segundo100);
+    display: inline-block;
+    color: white;
+    padding: 0.75em;
+    text-decoration: none;
+    font-family: var(--redonda);
+    line-height: 150%;
+    border-radius: 0.5rem;
+    transition: all 0.5s ease;
+}
+
+a.auto:hover {
+    background: var(--primero100);
+    border-radius: 0.1rem;
+
+}
+a.auto:before {
+    content:"➜ ";
+}
+
+a:visited.auto:before {
+    content:"✓ ";
+}
+
+/** Notas al pie con enlace **/
+
+.reference, .reference a {
+    position: relative;
+    color: var(--primero100);
+    line-height:100%;
+    text-decoration:none; 
+  } 
+
+  .backref {
+    text-decoration:none;
+  }
+  .backref::before {
+    content: "⮤ ";
+  }
+
+hr {
+    margin: 3rem 0;
+    padding: 0;
+    border: none;
+    border-top: solid 0.125rem var(--acento);
+}
+
+
+/** FORMULARIOS **/
+
+form {
+    --acento: var(--primero150);
+}
+ 
+.itemdrag {
+    background-color: var(--tercero100)
+}
+
+@media screen and (min-width:600px) {
+
+    body.contenido h2 {
+        font-size: 2.25rem;
+    }
+
+    .newtabs > li.active > h5 {
+        color: var(--segundo100);
+    }
+
+    .flex-lineal-sm .flechavariable {
+        transform: rotate(0deg);
+        align-self: center;
+      }
+
+      pre {
+        --tab-size: 1.5rem;
+      }
+
+   
+}
+
+
+@media screen and (min-width:800px) and (min-height:600px) {
+
+    body.contenido h2:not(.practicahana) {
+        font-size: 2.5rem;
+    }
+
+    aside.toc p {
+        padding:0.75em 0; 
+    }
+
+    .flex-lineal-md .flechavariable {
+        transform: rotate(0deg);
+        align-self: center;
+      }
+ 
+}
+
+@media screen and (min-width:1000px) and (min-height:600px) {
+
+    body.contenido h2:not(.practicahana) {
+        font-size: 2.75rem;
+    }
+
+    body.contenido h2.seccion {
+        grid-template-columns: 3rem 1fr;
+        grid-gap:1rem; 
+    } 
+
+    body.contenido h2.seccion span {
+        text-align: right;
+    }
+
+    body.contenido h2.seccion strong {
+        width: calc(100% + 4rem);
+    }
+
+    body.contenido h2.seccion span, body.contenido h2.seccion strong {
+        position:relative;
+        left: -4rem;
+    } 
+
+    
+.grid.python {
+    margin-left:-4.5rem;
+}
+
+}
+
+/* @media (prefers-color-scheme: dark) {
+    
+    body.contenido {
+        background-color: var(--neutro20);    
+        color: var(--blanco);
+        line-height:180%; 
+        --neutro20: #121222;
+        --acento: var(--img-lightblue);
+    } 
+    body.contenido > header, body.contenido main > header, section.nav { 
+        background: linear-gradient(90deg, var(--primero130), var(--negro)); 
+    }  
+
+    figure.full { 
+        --blanco: var(--neutro20); 
+    }
+    body.contenido h2, body.contenido h2 > strong {
+        color: var(--blanco); 
+    } 
+
+    a:hover {
+        color: var(--blanco);
+    }
+
+    aside.toc a {
+        color: var(--img-lightblue) 
+    }
+
+    .destacado { 
+        background: var(--acento); 
+        border-color: var(--blanco); 
+        --acento: var(--img-mediumblue);
+    }
+    
+    .destacado.segundo { 
+        --acento: var(--segundoAA); 
+    }
+
+    .destacado.tercero { 
+        --acento: var(--terceroAA);  
+    }
+
+    .destacado.extra { 
+        --acento: coral; 
+
+    }
+
+    .destacado :where(ol, ul) li::marker, .destacado h5.color, .destacado::before{
+        --acento: var(--blanco); 
+    }
+    .destacado.tercero:before {
+        color: var(--blanco);
+    }
+    .destacado.cita::after {
+        color:var(--blanco);
+    }
+
+    .newtabs {
+        background: var(--negro);
+        
+    }
+    .newtabs > li {
+        border-color: var(--segundo100); 
+    }
+
+    .newtabs > li > h5 {
+        background-color:var(--segundoAA);
+        border-color: var(--segundo100); 
+    }
+    .newtabs > li.active > h5 {
+        background-color:var(--negro);
+        border-bottom-color: var(--negro);
+    }
+
+    figure svg {
+        --primero150: var(--blanco);
+    }
+
+    figcaption {
+        color: var(--neutroC0);
+    }
+
+    .nota {
+        color:var(--neutro20); 
+    } 
+
+  }  */
